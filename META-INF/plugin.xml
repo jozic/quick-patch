@@ -1,0 +1,29 @@
+<idea-plugin version="2">
+    <name>Quick Patches</name>
+    <description>Save and restore your patches at one click</description>
+    <version>0.0.1</version>
+    <vendor>BB</vendor>
+    <idea-version since-build="10372"/>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="SavePatches" class="ua.com.jozic.quickpatch.actions.SavePatchesAction"
+                text="Make Quick Patches"
+                description="Make Quick Patches">
+            <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+</idea-plugin>
