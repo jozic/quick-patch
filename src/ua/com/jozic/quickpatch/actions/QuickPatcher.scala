@@ -20,7 +20,7 @@ class QuickPatcher(val project: Project) {
     localChangeLists.filter(forSave).foreach(makePatch)
   }
 
-  def forSave(list: LocalChangeList) = decisionMaker.needToSave(list)
+  def forSave(changeList: LocalChangeList) = decisionMaker.needToSave(changeList)
 
   def makePatch(list: LocalChangeList) = {
     val fileName = LOCATION + list.getName + ".patch"

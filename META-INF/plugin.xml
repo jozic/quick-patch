@@ -17,7 +17,8 @@
         <!-- Add your actions here -->
         <action id="SavePatches" class="ua.com.jozic.quickpatch.actions.SavePatchesAction"
                 text="Make Quick Patches"
-                description="Make Quick Patches">
+                description="Make Quick Patches"
+                icon="/ua/com/jozic/quickpatch/icons/qp.png">
             <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
         </action>
