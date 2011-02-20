@@ -1,10 +1,14 @@
 package ua.com.jozic.quickpatch.actions
 
-import com.intellij.openapi.actionSystem.{PlatformDataKeys, AnActionEvent, AnAction}
+import com.intellij.openapi.actionSystem.{AnActionEvent, AnAction}
+import ua.com.jozic.quickpatch.components.QuickPatchConfigurationComponent
+import ua.com.jozic.plugins.{ProjectAwareAction, ApplicationComponentsAware}
 
-class SavePatchesAction extends AnAction {
-  def actionPerformed(event: AnActionEvent) = {
-    val project = event.getData(PlatformDataKeys.PROJECT)
-    new QuickPatcher(project).patchCurrentChanges
+class SavePatchesAction extends AnAction with ApplicationComponentsAware with ProjectAwareAction {
+  def actionPerformed(event: AnActionEvent) {
+    val currentProject = project(event)
+    patchConfigurationComponent savePatchesFor currentProject
   }
+
+  def patchConfigurationComponent = applicationComponent[QuickPatchConfigurationComponent]
 }

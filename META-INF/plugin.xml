@@ -7,9 +7,19 @@
 
     <application-components>
         <!-- Add your application components here -->
+        <component>
+            <implementation-class>
+                ua.com.jozic.quickpatch.components.QuickPatchConfigurationComponent
+            </implementation-class>
+        </component>
     </application-components>
 
     <project-components>
+        <component>
+            <implementation-class>
+                ua.com.jozic.quickpatch.components.QuickPatcherComponent
+            </implementation-class>
+        </component>
         <!-- Add your project components here -->
     </project-components>
 
