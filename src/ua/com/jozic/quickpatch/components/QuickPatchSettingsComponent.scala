@@ -29,7 +29,7 @@ with ProjectComponentsAware {
 
   def isModified = false
 
-  def createComponent = QuickPatchSettings.peer
+  def createComponent = QuickPatchSettingsUI.jComponent
 
   def savePatchesFor(project: Project) {
     val quickPatcherComponent = projectComponent[QuickPatcherComponent](project)

@@ -9,18 +9,18 @@ import scalaj.collection.Imports._
 class QuickPatcherComponent(val project: Project) extends ProjectComponent {
 
   val quickPatcher = new QuickPatcher(project) {
-    def location = QuickPatchSettings.patchesLocation
+    def location = QuickPatchSettingsUI.patchesLocation
 
-    override def prefix = QuickPatchSettings.addProjectName match {
+    override def prefix = QuickPatchSettingsUI.addProjectName match {
       case true => project.getName + "."
       case _ => super.prefix
     }
   }
 
   val decisionMaker = new SaveDecisionMaker {
-    def saveDefault = QuickPatchSettings.saveDefault
+    def saveDefault = QuickPatchSettingsUI.saveDefault
 
-    def saveEmpty = QuickPatchSettings.saveEmpty
+    def saveEmpty = QuickPatchSettingsUI.saveEmpty
   }
 
   def disposeComponent {
@@ -37,13 +37,13 @@ class QuickPatcherComponent(val project: Project) extends ProjectComponent {
 
   def getComponentName = "QuickPatcherComponent"
 
-  def makePatches {
+  def makePatches() {
     val changeListManager = ChangeListManager.getInstance(project)
     val localChangeLists = changeListManager.getChangeLists.asScala
-    localChangeLists.filter(forSave).foreach(makePatch)
+    localChangeLists filter (forSave) foreach (makePatch)
   }
 
-  def forSave(changeList: LocalChangeList) = decisionMaker.needToSave(changeList)
+  def forSave(changeList: LocalChangeList) = decisionMaker needToSave changeList
 
   def makePatch(changeList: LocalChangeList) = quickPatcher.makePatch(changeList)
 }
