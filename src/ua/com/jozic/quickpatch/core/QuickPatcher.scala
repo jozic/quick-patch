@@ -24,13 +24,9 @@ abstract class QuickPatcher(val project: Project) {
       val lineSeparator = CodeStyleFacade.getInstance(project).getLineSeparator
       UnifiedDiffWriter.write(patches, writer, lineSeparator)
     } finally {
-      writer.close
+      writer.close()
     }
   }
 
-  def normalizeLocation = if (location.endsWith("/")) {
-    location
-  } else {
-    location + "/"
-  }
+  def normalizeLocation = if (location.endsWith("/")) location else location + "/"
 }
