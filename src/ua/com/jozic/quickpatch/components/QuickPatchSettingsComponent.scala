@@ -6,14 +6,14 @@ import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
 import ua.com.jozic.plugins.ProjectComponentsAware
 
-class QuickPatchConfigurationComponent extends ApplicationComponent with Configurable
+class QuickPatchSettingsComponent extends ApplicationComponent with Configurable
 with ProjectComponentsAware {
 
   def initComponent {}
 
   def disposeComponent {}
 
-  @NotNull def getComponentName = "QuickPatchConfigurationComponent"
+  @NotNull def getComponentName = "QuickPatchSettingsComponent"
 
   def getHelpTopic = ""
 

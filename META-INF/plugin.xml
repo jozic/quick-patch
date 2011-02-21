@@ -9,7 +9,7 @@
         <!-- Add your application components here -->
         <component>
             <implementation-class>
-                ua.com.jozic.quickpatch.components.QuickPatchConfigurationComponent
+                ua.com.jozic.quickpatch.components.QuickPatchSettingsComponent
             </implementation-class>
         </component>
     </application-components>
