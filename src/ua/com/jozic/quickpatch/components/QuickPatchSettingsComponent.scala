@@ -9,9 +9,12 @@ import ua.com.jozic.plugins.ProjectComponentsAware
 class QuickPatchSettingsComponent extends ApplicationComponent with Configurable
 with ProjectComponentsAware {
 
-  def initComponent {}
+  var settings = new QuickPatchSettings
+  val settingsUI = new QuickPatchSettingsUI(settings)
 
-  def disposeComponent {}
+  def initComponent() {}
+
+  def disposeComponent() {}
 
   @NotNull def getComponentName = "QuickPatchSettingsComponent"
 
@@ -21,15 +24,19 @@ with ProjectComponentsAware {
 
   def getDisplayName = "Quick Patch"
 
-  def disposeUIResources {}
+  def disposeUIResources() {}
 
-  def reset {}
+  def reset() {
+    settingsUI.updateUI()
+  }
 
-  def apply {}
+  def apply() {
+    settingsUI.updateModel()
+  }
 
-  def isModified = false
+  def isModified = settingsUI.isModified
 
-  def createComponent = QuickPatchSettingsUI.jComponent
+  def createComponent = settingsUI.jComponent
 
   def savePatchesFor(project: Project) {
     val quickPatcherComponent = projectComponent[QuickPatcherComponent](project)

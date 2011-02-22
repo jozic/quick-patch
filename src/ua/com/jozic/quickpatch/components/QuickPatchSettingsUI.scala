@@ -2,18 +2,15 @@ package ua.com.jozic.quickpatch.components
 
 import swing._
 
-object QuickPatchSettingsUI {
+class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
 
   val pathText = new Label {
     text = "Path to save your quick patches to:"
   }
   val locationField = new TextField {
-    text = "C:/patches"
     columns = 30
   }
-  val saveDefaultField = new CheckBox("Save Default change list") {
-    selected = true
-  }
+  val saveDefaultField = new CheckBox("Save Default change list")
   val saveEmptyField = new CheckBox("Save empty change lists")
   val addProjectNameField = new CheckBox("Add project name as prefix")
 
@@ -29,11 +26,22 @@ object QuickPatchSettingsUI {
 
   def jComponent = panel.peer
 
-  def patchesLocation = locationField.text
+  def updateUI() {
+    locationField.text = settings.location
+    saveDefaultField.selected = settings.saveDefault
+    saveEmptyField.selected = settings.saveEmpty
+    addProjectNameField.selected = settings.addProjectName
+  }
 
-  def saveDefault = saveDefaultField.selected
+  def updateModel() {
+    settings.location = locationField.text
+    settings.saveDefault = saveDefaultField.selected
+    settings.saveEmpty = saveEmptyField.selected
+    settings.addProjectName = addProjectNameField.selected
+  }
 
-  def saveEmpty = saveEmptyField.selected
-
-  def addProjectName = addProjectNameField.selected
+  def isModified = settings.location != locationField.text ||
+          settings.saveDefault != saveDefaultField.selected ||
+          settings.saveEmpty != saveEmptyField.selected ||
+          settings.addProjectName != addProjectNameField.selected
 }

@@ -5,34 +5,37 @@ import com.intellij.openapi.components.ProjectComponent
 import ua.com.jozic.quickpatch.core.{SaveDecisionMaker, QuickPatcher}
 import com.intellij.openapi.vcs.changes.{ChangeListManager, LocalChangeList}
 import scalaj.collection.Imports._
+import ua.com.jozic.plugins.ApplicationComponentsAware
 
-class QuickPatcherComponent(val project: Project) extends ProjectComponent {
+class QuickPatcherComponent(val project: Project) extends ProjectComponent with ApplicationComponentsAware {
+
+  def settings = applicationComponent[QuickPatchSettingsComponent].settings
 
   val quickPatcher = new QuickPatcher(project) {
-    def location = QuickPatchSettingsUI.patchesLocation
+    def location = settings.location
 
-    override def prefix = QuickPatchSettingsUI.addProjectName match {
+    override def prefix = settings.addProjectName match {
       case true => project.getName + "."
       case _ => super.prefix
     }
   }
 
   val decisionMaker = new SaveDecisionMaker {
-    def saveDefault = QuickPatchSettingsUI.saveDefault
+    def saveDefault = settings.saveDefault
 
-    def saveEmpty = QuickPatchSettingsUI.saveEmpty
+    def saveEmpty = settings.saveEmpty
   }
 
-  def disposeComponent {
+  def disposeComponent() {
   }
 
-  def initComponent {
+  def initComponent() {
   }
 
-  def projectClosed {
+  def projectClosed() {
   }
 
-  def projectOpened {
+  def projectOpened() {
   }
 
   def getComponentName = "QuickPatcherComponent"
