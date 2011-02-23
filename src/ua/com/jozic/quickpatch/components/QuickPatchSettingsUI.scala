@@ -3,10 +3,7 @@ package ua.com.jozic.quickpatch.components
 import swing._
 
 class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
-
-  val pathText = new Label {
-    text = "Path to save your quick patches to:"
-  }
+  val pathText = new Label("Path to save your quick patches to:")
   val locationField = new TextField {
     columns = 30
   }

@@ -12,6 +12,8 @@ with ProjectComponentsAware {
   var settings = new QuickPatchSettings
   val settingsUI = new QuickPatchSettingsUI(settings)
 
+  def initState = settings
+
   def initComponent() {}
 
   def disposeComponent() {}
@@ -40,6 +42,6 @@ with ProjectComponentsAware {
 
   def savePatchesFor(project: Project) {
     val quickPatcherComponent = projectComponent[QuickPatcherComponent](project)
-    quickPatcherComponent makePatches
+    quickPatcherComponent.makePatches()
   }
 }
