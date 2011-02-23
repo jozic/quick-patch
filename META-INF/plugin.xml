@@ -2,8 +2,13 @@
     <name>Quick Patches</name>
     <description>Save and restore your patches at one click</description>
     <version>0.0.1</version>
-    <vendor>BB</vendor>
+    <vendor email="jozic@ua.fm">BB</vendor>
     <idea-version since-build="10372"/>
+    <change-notes>
+        <ul>
+            <li>0.0.1 initial version - save patches to a specified directory</li>
+        </ul>
+    </change-notes>
 
     <application-components>
         <!-- Add your application components here -->
