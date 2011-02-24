@@ -1,18 +1,25 @@
 package ua.com.jozic.quickpatch.components
 
-import com.intellij.openapi.components.ApplicationComponent
 import org.jetbrains.annotations.NotNull
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
 import ua.com.jozic.plugins.ProjectComponentsAware
+import com.intellij.openapi.components.{Storage, PersistentStateComponent, State, ApplicationComponent}
+import org.jdom.Element
 
+@State(name = "QuickPatchSettings",
+  storages = Array(new Storage(id = "default", file = "$APP_CONFIG$/qp.xml")))
 class QuickPatchSettingsComponent extends ApplicationComponent with Configurable
-with ProjectComponentsAware {
+with ProjectComponentsAware with PersistentStateComponent[Element] {
 
   var settings = new QuickPatchSettings
   val settingsUI = new QuickPatchSettingsUI(settings)
 
-  def initState = settings
+  def getState = settings.getState()
+
+  def loadState(state: Element) {
+    settings.loadState(state)
+  }
 
   def initComponent() {}
 
