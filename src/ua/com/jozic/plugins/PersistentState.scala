@@ -3,6 +3,8 @@ package ua.com.jozic.plugins
 import org.jdom.xpath.XPath
 import org.jdom.{Attribute, Element}
 
+import scala.util.control.Exception.catching
+
 trait PersistentState {
 
   protected def elem(name: String) = new Element(name)
@@ -22,11 +24,8 @@ trait PersistentState {
   def options: Map[String, Any]
 
   final def loadState(state: Element) {
-    try {
-      doLoad(state)
-    } catch {
-      case _ =>
-    }
+    //todo write error in IDEA log
+    catching(classOf[Exception]) opt doLoad(state)
   }
 
   def doLoad(state: Element): Unit
