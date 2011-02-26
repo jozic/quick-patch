@@ -1,9 +1,9 @@
 package ua.com.jozic.quickpatch.components
 
-import org.jdom.xpath.XPath
-import org.jdom.{Attribute, Element}
+import org.jdom.Element
+import ua.com.jozic.plugins.PersistentState
 
-class QuickPatchSettings {
+class QuickPatchSettings extends PersistentState {
 
   private val LOCATION = "location"
   private val SAVE_DEFAULT = "save_default"
@@ -15,32 +15,13 @@ class QuickPatchSettings {
   var saveEmpty = false
   var addProjectName = false
 
-  def getState() = {
-    elem("settings").addContent(option(LOCATION, location)).
-            addContent(option(SAVE_DEFAULT, saveDefault)).
-            addContent(option(SAVE_EMPTY, saveEmpty)).
-            addContent(option(ADD_PROJECT_NAME, addProjectName))
+  def options = Map(LOCATION -> location, SAVE_DEFAULT -> saveDefault,
+    SAVE_EMPTY -> saveEmpty, ADD_PROJECT_NAME -> addProjectName)
+
+  def doLoad(state: Element) {
+    location = stringValue(state, LOCATION)
+    saveDefault = booleanValue(state, SAVE_DEFAULT)
+    saveEmpty = booleanValue(state, SAVE_EMPTY)
+    addProjectName = booleanValue(state, ADD_PROJECT_NAME)
   }
-
-
-  def loadState(state: Element) {
-    try {
-      location = stringValue(state, LOCATION)
-      saveDefault = booleanValue(state, SAVE_DEFAULT)
-      saveEmpty = booleanValue(state, SAVE_EMPTY)
-      addProjectName = booleanValue(state, ADD_PROJECT_NAME)
-    } catch {
-      case _ =>
-    }
-  }
-
-  def stringValue(state: Element, name: String): String =
-    XPath.selectSingleNode(state, "./option[@name='" + name + "']/@value").asInstanceOf[Attribute].getValue
-
-  private def booleanValue(state: Element, name: String) = stringValue(state, name).toBoolean
-
-  private def elem(name: String) = new Element(name)
-
-  private def option(name: String, value: Any) =
-    elem("option").setAttribute("name", name).setAttribute("value", value.toString)
 }
