@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project
 import ua.com.jozic.plugins.ProjectComponentsAware
 import com.intellij.openapi.components.{Storage, PersistentStateComponent, State, ApplicationComponent}
 import org.jdom.Element
+import com.intellij.openapi.util.IconLoader
 
 @State(name = "QuickPatchSettings",
   storages = Array(new Storage(id = "default", file = "$APP_CONFIG$/qp.xml")))
@@ -15,7 +16,7 @@ with ProjectComponentsAware with PersistentStateComponent[Element] {
   var settings = new QuickPatchSettings
   val settingsUI = new QuickPatchSettingsUI(settings)
 
-  def getState = settings.getState()
+  def getState = settings.getState
 
   def loadState(state: Element) {
     settings.loadState(state)
@@ -29,7 +30,7 @@ with ProjectComponentsAware with PersistentStateComponent[Element] {
 
   def getHelpTopic = ""
 
-  def getIcon = null
+  def getIcon = IconLoader.getIcon("/ua/com/jozic/quickpatch/icons/quickpatch.png")
 
   def getDisplayName = "Quick Patch"
 

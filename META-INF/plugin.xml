@@ -2,8 +2,9 @@
     <name>Quick Patches</name>
     <description>Save and restore your patches at one click</description>
     <version>0.0.1</version>
-    <vendor email="jozic@ua.fm">BB</vendor>
+    <vendor email="jozic@ua.fm" logo="/ua/com/jozic/quickpatch/icons/logo.png">Ievgen Platonov</vendor>
     <idea-version since-build="10372"/>
+
     <change-notes>
         <ul>
             <li>0.0.1 initial version - save patches to a specified directory</li>
@@ -33,7 +34,7 @@
         <action id="SavePatches" class="ua.com.jozic.quickpatch.actions.SavePatchesAction"
                 text="Make Quick Patches"
                 description="Make Quick Patches"
-                icon="/ua/com/jozic/quickpatch/icons/qp.png">
+                icon="/ua/com/jozic/quickpatch/icons/make.patch.png">
             <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
         </action>
