@@ -1,6 +1,7 @@
 package ua.com.jozic.quickpatch.components
 
-import org.jdom.Element
+import org.jdom.xpath.XPath
+import org.jdom.{Attribute, Element}
 
 class QuickPatchSettings {
 
@@ -15,28 +16,31 @@ class QuickPatchSettings {
   var addProjectName = false
 
   def getState() = {
-    val element = new Element("QuickPatchSettings")
-    element.addContent(elem(LOCATION, location))
-    element.addContent(elem(SAVE_DEFAULT, saveDefault))
-    element.addContent(elem(SAVE_EMPTY, saveEmpty))
-    element.addContent(elem(ADD_PROJECT_NAME, addProjectName))
-    element
+    elem("settings").addContent(option(LOCATION, location)).
+            addContent(option(SAVE_DEFAULT, saveDefault)).
+            addContent(option(SAVE_EMPTY, saveEmpty)).
+            addContent(option(ADD_PROJECT_NAME, addProjectName))
   }
+
 
   def loadState(state: Element) {
-    location = stringValue(state, LOCATION)
-    saveDefault = booleanValue(state, SAVE_DEFAULT)
-    saveEmpty = booleanValue(state, SAVE_EMPTY)
-    addProjectName = booleanValue(state, ADD_PROJECT_NAME)
+    try {
+      location = stringValue(state, LOCATION)
+      saveDefault = booleanValue(state, SAVE_DEFAULT)
+      saveEmpty = booleanValue(state, SAVE_EMPTY)
+      addProjectName = booleanValue(state, ADD_PROJECT_NAME)
+    } catch {
+      case _ =>
+    }
   }
 
-  def stringValue(state: Element, name: String) = state.getChild(name).getValue
+  def stringValue(state: Element, name: String): String =
+    XPath.selectSingleNode(state, "./option[@name='" + name + "']/@value").asInstanceOf[Attribute].getValue
 
-  def booleanValue(state: Element, name: String) = stringValue(state, name).toBoolean
+  private def booleanValue(state: Element, name: String) = stringValue(state, name).toBoolean
 
-  private def elem(name: String, value: Any) = {
-    val e = new Element(name)
-    e.addContent(value.toString)
-    e
-  }
+  private def elem(name: String) = new Element(name)
+
+  private def option(name: String, value: Any) =
+    elem("option").setAttribute("name", name).setAttribute("value", value.toString)
 }
