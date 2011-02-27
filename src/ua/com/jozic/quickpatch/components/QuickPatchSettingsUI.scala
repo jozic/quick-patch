@@ -1,8 +1,10 @@
 package ua.com.jozic.quickpatch.components
 
 import swing._
+import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
 
 class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
+
   val pathText = new Label("Path to save your quick patches to:")
   val locationField = new TextField {
     columns = 30
@@ -35,10 +37,18 @@ class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
     settings.saveDefault = saveDefaultField.selected
     settings.saveEmpty = saveEmptyField.selected
     settings.addProjectName = addProjectNameField.selected
+    checkLocation()
   }
 
   def isModified = settings.location != locationField.text ||
           settings.saveDefault != saveDefaultField.selected ||
           settings.saveEmpty != saveEmptyField.selected ||
           settings.addProjectName != addProjectNameField.selected
+
+  def checkLocation() {
+    if (locationField.text.isEmpty) {
+      Dialog.showMessage(panel, message("empty.location.error.message.settings"),
+        message("dialog.title"), Dialog.Message.Warning)
+    }
+  }
 }

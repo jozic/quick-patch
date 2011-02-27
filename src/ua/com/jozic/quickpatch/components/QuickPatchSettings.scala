@@ -10,7 +10,7 @@ class QuickPatchSettings extends PersistentState {
   private val SAVE_EMPTY = "save_empty"
   private val ADD_PROJECT_NAME = "add_project_name"
 
-  var location = "C:/patches/123"
+  var location = ""
   var saveDefault = true
   var saveEmpty = false
   var addProjectName = false
@@ -24,4 +24,6 @@ class QuickPatchSettings extends PersistentState {
     saveEmpty = booleanValue(state, SAVE_EMPTY)
     addProjectName = booleanValue(state, ADD_PROJECT_NAME)
   }
+
+  def notReady = location.isEmpty
 }
