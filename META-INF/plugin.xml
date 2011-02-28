@@ -1,5 +1,5 @@
 <idea-plugin version="2">
-    <name>Quick Patches</name>
+    <name>Quick Patch</name>
     <description>Save and restore your patches at one click</description>
     <version>0.0.1</version>
     <vendor email="jozic@ua.fm" logo="/ua/com/jozic/quickpatch/icons/logo.png">Ievgen Platonov</vendor>
@@ -7,7 +7,7 @@
 
     <change-notes>
         <ul>
-            <li>0.0.1 initial version - save patches to a specified directory</li>
+            <li>0.0.1 initial version - save patches to the specified directory</li>
         </ul>
     </change-notes>
 
