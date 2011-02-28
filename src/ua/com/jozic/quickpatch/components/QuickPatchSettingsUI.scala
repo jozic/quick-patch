@@ -2,16 +2,17 @@ package ua.com.jozic.quickpatch.components
 
 import swing._
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
+import java.io.File
 
 class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
 
-  val pathText = new Label("Path to save your quick patches to:")
+  val pathText = new Label(message("location.field.text"))
   val locationField = new TextField {
     columns = 30
   }
-  val saveDefaultField = new CheckBox("Save Default change list")
-  val saveEmptyField = new CheckBox("Save empty change lists")
-  val addProjectNameField = new CheckBox("Add project name as prefix")
+  val saveDefaultField = new CheckBox(message("default.field.text"))
+  val saveEmptyField = new CheckBox(message("empty.field.text"))
+  val addProjectNameField = new CheckBox(message("project.field.text"))
 
   val panel = new BoxPanel(Orientation.Vertical) {
     contents += new FlowPanel {
@@ -37,7 +38,7 @@ class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
     settings.saveDefault = saveDefaultField.selected
     settings.saveEmpty = saveEmptyField.selected
     settings.addProjectName = addProjectNameField.selected
-    checkLocation()
+    checkIfReadyToUse()
   }
 
   def isModified = settings.location != locationField.text ||
@@ -45,10 +46,34 @@ class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
           settings.saveEmpty != saveEmptyField.selected ||
           settings.addProjectName != addProjectNameField.selected
 
-  def checkLocation() {
-    if (locationField.text.isEmpty) {
+  def checkIfReadyToUse() {
+    checkLocationIsNonEmpty()
+    checkLocationExists()
+  }
+
+  def checkLocationIsNonEmpty() {
+    if (settings.location.isEmpty) {
       Dialog.showMessage(panel, message("empty.location.error.message.settings"),
-        message("dialog.title"), Dialog.Message.Warning)
+        dialogTitle, Dialog.Message.Warning)
     }
   }
+
+  def checkLocationExists() {
+    if (!settings.location.isEmpty && !new File(settings.location).exists) {
+      val answer = Dialog.showConfirmation(panel, message("location.not.exists.confirmation.message"),
+        dialogTitle)
+      if (answer == Dialog.Result.Yes) {
+        tryCreateLocation()
+      }
+    }
+  }
+
+  def tryCreateLocation() {
+    if (!new File(settings.location).mkdir()) {
+      Dialog.showMessage(panel, message("cant.create.location.error.message"),
+        dialogTitle, Dialog.Message.Error)
+    }
+  }
+
+  def dialogTitle = message("dialog.title")
 }

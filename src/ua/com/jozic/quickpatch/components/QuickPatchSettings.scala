@@ -2,6 +2,7 @@ package ua.com.jozic.quickpatch.components
 
 import org.jdom.Element
 import ua.com.jozic.plugins.PersistentState
+import java.io.File
 
 class QuickPatchSettings extends PersistentState {
 
@@ -25,5 +26,5 @@ class QuickPatchSettings extends PersistentState {
     addProjectName = booleanValue(state, ADD_PROJECT_NAME)
   }
 
-  def notReady = location.isEmpty
+  def notReady = location.isEmpty || !new File(location).exists()
 }
