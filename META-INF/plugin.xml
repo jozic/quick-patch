@@ -1,9 +1,14 @@
 <idea-plugin version="2">
     <name>Quick Patch</name>
     <description>Save and restore your patches at one click</description>
-    <version>0.0.1</version>
-    <vendor email="jozic@ua.fm" logo="/ua/com/jozic/quickpatch/icons/logo.png">Ievgen Platonov</vendor>
+    <version>0.0.2</version>
+    <vendor email="jozic@ua.fm"
+            logo="/ua/com/jozic/quickpatch/icons/logo.png"
+            url="https://github.com/jozic/quick-patch">Ievgen Platonov
+    </vendor>
+    <category>VCS Integration</category>
     <idea-version since-build="10372"/>
+    <resource-bundle>ua.com.jozic.quickpatch.QuickPatchMessageBundle</resource-bundle>
 
     <change-notes>
         <ul>
@@ -12,7 +17,6 @@
     </change-notes>
 
     <application-components>
-        <!-- Add your application components here -->
         <component>
             <implementation-class>
                 ua.com.jozic.quickpatch.components.QuickPatchSettingsComponent
@@ -26,17 +30,17 @@
                 ua.com.jozic.quickpatch.components.QuickPatcherComponent
             </implementation-class>
         </component>
-        <!-- Add your project components here -->
     </project-components>
 
     <actions>
-        <!-- Add your actions here -->
         <action id="SavePatches" class="ua.com.jozic.quickpatch.actions.SavePatchesAction"
-                text="Make Quick Patches"
-                description="Make Quick Patches"
                 icon="/ua/com/jozic/quickpatch/icons/make.patch.png">
             <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
+        </action>
+        <action id="RestorePatches" class="ua.com.jozic.quickpatch.actions.RestorePatchesAction"
+                icon="/ua/com/jozic/quickpatch/icons/restore.patch.png">
+            <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
         </action>
     </actions>
 

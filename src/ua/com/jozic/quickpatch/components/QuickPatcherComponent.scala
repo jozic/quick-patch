@@ -46,6 +46,11 @@ class QuickPatcherComponent(val project: Project) extends ProjectComponent with 
     localChangeLists filter (forSave) foreach (makePatch)
   }
 
+  def restorePatches() {
+    val changeListManager = ChangeListManager.getInstance(project)
+    // todo  restore stub
+  }
+
   def forSave(changeList: LocalChangeList) = decisionMaker needToSave changeList
 
   def makePatch(changeList: LocalChangeList) = quickPatcher.makePatch(changeList)

@@ -2,7 +2,6 @@ package ua.com.jozic.quickpatch.components
 
 import org.jetbrains.annotations.NotNull
 import com.intellij.openapi.options.Configurable
-import com.intellij.openapi.project.Project
 import ua.com.jozic.plugins.ProjectComponentsAware
 import com.intellij.openapi.components.{Storage, PersistentStateComponent, State, ApplicationComponent}
 import org.jdom.Element
@@ -47,9 +46,4 @@ with ProjectComponentsAware with PersistentStateComponent[Element] {
   def isModified = settingsUI.isModified
 
   def createComponent = settingsUI.jComponent
-
-  def savePatchesFor(project: Project) {
-    val quickPatcherComponent = projectComponent[QuickPatcherComponent](project)
-    quickPatcherComponent.makePatches()
-  }
 }
