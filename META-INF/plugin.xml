@@ -30,6 +30,11 @@
                 ua.com.jozic.quickpatch.components.QuickPatcherComponent
             </implementation-class>
         </component>
+        <component>
+            <implementation-class>
+                ua.com.jozic.quickpatch.components.QuickPatchApplierComponent
+            </implementation-class>
+        </component>
     </project-components>
 
     <actions>

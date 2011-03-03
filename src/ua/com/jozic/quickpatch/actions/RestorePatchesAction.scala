@@ -1,6 +1,8 @@
 package ua.com.jozic.quickpatch.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
+import ua.com.jozic.quickpatch.components.QuickPatchApplierComponent
+import com.intellij.openapi.project.Project
 
 /**
  * @author jozic
@@ -9,6 +11,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 class RestorePatchesAction extends BasePatchesAction {
   def doAction(event: AnActionEvent) {
     val currentProject = project(event)
-    patcherComponent(currentProject).restorePatches()
+    patchApplierComponent(currentProject).restorePatches()
   }
+
+  def patchApplierComponent(project: Project) = projectComponent[QuickPatchApplierComponent](project)
 }

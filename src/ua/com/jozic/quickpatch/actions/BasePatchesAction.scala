@@ -4,8 +4,7 @@ import com.intellij.openapi.actionSystem.{AnActionEvent, AnAction}
 import swing.Dialog
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
 import ua.com.jozic.plugins.{ProjectComponentsAware, ProjectAwareAction, ApplicationComponentsAware}
-import ua.com.jozic.quickpatch.components.{QuickPatcherComponent, QuickPatchSettingsComponent}
-import com.intellij.openapi.project.Project
+import ua.com.jozic.quickpatch.components.QuickPatchSettingsComponent
 
 /**
  * @author jozic
@@ -26,6 +25,4 @@ with ProjectComponentsAware {
   def doAction(event: AnActionEvent): Unit
 
   def patchConfigurationComponent = applicationComponent[QuickPatchSettingsComponent]
-
-  def patcherComponent(project: Project) = projectComponent[QuickPatcherComponent](project)
 }
