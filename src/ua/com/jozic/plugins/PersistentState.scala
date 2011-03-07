@@ -3,9 +3,9 @@ package ua.com.jozic.plugins
 import org.jdom.xpath.XPath
 import org.jdom.{Attribute, Element}
 
-import scala.util.control.Exception.catching
-
 trait PersistentState {
+
+  self: LoggingExceptions =>
 
   protected def elem(name: String) = new Element(name)
 
@@ -17,15 +17,16 @@ trait PersistentState {
   protected def option(name: String, value: Any) =
     elem("option").setAttribute("name", name).setAttribute("value", value.toString)
 
-  final def getState = options.foldLeft(elem("settings")) {
+  final def getState: Element = options.foldLeft(elem("settings")) {
     case (e, (name, value)) => e.addContent(option(name, value))
   }
 
   def options: Map[String, Any]
 
   final def loadState(state: Element) {
-    //todo write error in IDEA log
-    catching(classOf[Exception]) opt doLoad(state)
+    loggingAsWarn("Can't load settings for Quick Patch") {
+      doLoad(state)
+    }
   }
 
   def doLoad(state: Element): Unit

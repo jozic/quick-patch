@@ -1,10 +1,10 @@
 package ua.com.jozic.quickpatch.components
 
 import org.jdom.Element
-import ua.com.jozic.plugins.PersistentState
 import java.io.File
+import ua.com.jozic.plugins.{LoggingExceptions, PersistentState}
 
-class QuickPatchSettings extends PersistentState {
+class QuickPatchSettings extends PersistentState with LoggingExceptions {
 
   private val LOCATION = "location"
   private val SAVE_DEFAULT = "save_default"
@@ -25,6 +25,9 @@ class QuickPatchSettings extends PersistentState {
     saveEmpty = booleanValue(state, SAVE_EMPTY)
     addProjectName = booleanValue(state, ADD_PROJECT_NAME)
   }
+
+
+  def loggerCategory = "#ua.com.jozic.plugins.QuickPatchPlugin"
 
   def notReady = location.isEmpty || !new File(location).exists()
 }
