@@ -3,8 +3,9 @@ package ua.com.jozic.quickpatch.components
 import swing._
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
 import java.io.File
+import ua.com.jozic.plugins.Notifications
 
-class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
+class QuickPatchSettingsUI(val settings: QuickPatchSettings) extends Notifications {
 
   val pathText = new Label(message("location.field.text"))
   val locationField = new TextField {
@@ -52,9 +53,9 @@ class QuickPatchSettingsUI(val settings: QuickPatchSettings) {
   }
 
   def checkLocationIsNonEmpty() {
+    val emptyFieldWarning = warning(message("notifications.group.id"), dialogTitle, message("empty.location.error.message.settings"))
     if (settings.location.isEmpty) {
-      Dialog.showMessage(panel, message("empty.location.error.message.settings"),
-        dialogTitle, Dialog.Message.Warning)
+      doNotify(emptyFieldWarning)
     }
   }
 

@@ -9,14 +9,11 @@ trait LoggingExceptions {
 
   lazy val logger = Logger.getInstance(loggerCategory)
 
-  def warn(message: String, e: Exception) = logger.warn(message, e)
+  def loggingAsWarn(message: String)(body: => Unit) {
+    warning(message)(body)
+  }
 
-  def loggingAsWarn(warnMessage: String)(body: => Unit) {
-    val handle = handling(classOf[Exception]) by {
-      case e => logger.warn(warnMessage, e)
-    }
-    handle {
-      body
-    }
+  private def warning(message: String) = handling[Unit](classOf[Exception]) by {
+    logger.warn(message, _)
   }
 }

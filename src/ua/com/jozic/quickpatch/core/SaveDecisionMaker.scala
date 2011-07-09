@@ -16,6 +16,6 @@ trait SaveDecisionMaker {
     if (isEmpty && !saveEmpty) {
       return false
     }
-    return true
+    true
   }
 }

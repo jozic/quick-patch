@@ -29,5 +29,5 @@ trait PersistentState {
     }
   }
 
-  def doLoad(state: Element): Unit
+  def doLoad(state: Element)
 }
