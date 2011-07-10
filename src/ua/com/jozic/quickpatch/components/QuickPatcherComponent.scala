@@ -10,10 +10,7 @@ class QuickPatcherComponent(val project: Project) extends BaseQuickPatchComponen
   val quickPatcher = new QuickPatcher(project) {
     def location = settings.location
 
-    override def prefix = settings.addProjectName match {
-      case true => project.getName + "."
-      case _ => super.prefix
-    }
+    override def prefix = if (settings.addProjectName) project.getName + "." else super.prefix
   }
 
   val decisionMaker = new SaveDecisionMaker {
@@ -32,5 +29,7 @@ class QuickPatcherComponent(val project: Project) extends BaseQuickPatchComponen
 
   def forSave(changeList: LocalChangeList) = decisionMaker needToSave changeList
 
-  def makePatch(changeList: LocalChangeList) = quickPatcher.makePatch(changeList)
+  def makePatch(changeList: LocalChangeList) {
+    quickPatcher.makePatch(changeList)
+  }
 }
