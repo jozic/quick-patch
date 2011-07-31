@@ -1,12 +1,8 @@
 package ua.com.jozic.quickpatch.components
 
-import ua.com.jozic.plugins.ApplicationComponentsAware
 import com.intellij.openapi.components.ProjectComponent
 
-
-trait BaseQuickPatchComponent extends ProjectComponent with ApplicationComponentsAware {
-
-  def settings = applicationComponent[QuickPatchSettingsComponent].settings
+trait BaseQuickPatchComponent extends ProjectComponent with SettingsAware {
 
   def disposeComponent() {}
 

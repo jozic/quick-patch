@@ -2,10 +2,12 @@ package ua.com.jozic.quickpatch.components
 
 import com.intellij.openapi.project.Project
 import ua.com.jozic.quickpatch.core.{SaveDecisionMaker, QuickPatcher}
-import com.intellij.openapi.vcs.changes.{ChangeListManager, LocalChangeList}
-import scalaj.collection.Imports._
+import com.intellij.openapi.vcs.changes.LocalChangeList
+import ua.com.jozic.plugins.ProjectChangeListsManager
 
 class QuickPatcherComponent(val project: Project) extends BaseQuickPatchComponent {
+
+  private val changeListsManager = ProjectChangeListsManager(project)
 
   val quickPatcher = new QuickPatcher(project) {
     def location = settings.location
@@ -22,9 +24,8 @@ class QuickPatcherComponent(val project: Project) extends BaseQuickPatchComponen
   def getComponentName = "QuickPatcherComponent"
 
   def makePatches() {
-    val changeListManager = ChangeListManager.getInstance(project)
-    val localChangeLists = changeListManager.getChangeLists.asScala
-    localChangeLists filter (forSave) foreach (makePatch)
+    val localChangeLists = changeListsManager.changeLists
+    localChangeLists.filter(forSave).foreach(makePatch)
   }
 
   def forSave(changeList: LocalChangeList) = decisionMaker needToSave changeList

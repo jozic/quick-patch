@@ -27,7 +27,7 @@ class QuickPatchSettings extends PersistentState with LoggingExceptions {
   }
 
 
-  def loggerCategory = "#ua.com.jozic.plugins.QuickPatchPlugin"
+  val loggerCategory = "#ua.com.jozic.plugins.QuickPatchPlugin"
 
   def notReady = location.isEmpty || !new File(location).exists()
 }
