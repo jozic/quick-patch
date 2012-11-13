@@ -1,18 +1,20 @@
 <idea-plugin version="2">
     <name>Quick Patch</name>
-    <description>Save and restore your patches at one click</description>
-    <version>0.0.2</version>
+    <description>Save your patches at one click</description>
+    <version>0.0.3</version>
     <vendor email="jozic@ua.fm"
             logo="/ua/com/jozic/quickpatch/icons/logo.png"
             url="https://github.com/jozic/quick-patch">Ievgen Platonov
     </vendor>
     <category>VCS Integration</category>
-    <idea-version since-build="10372"/>
+    <idea-version since-build="122746"/>
     <resource-bundle>ua.com.jozic.quickpatch.QuickPatchMessageBundle</resource-bundle>
 
     <change-notes>
         <ul>
             <li>0.0.1 initial version - save patches to the specified directory</li>
+            <li>0.0.2 bug fixes</li>
+            <li>0.0.3 Support for IDEA 12 (Leda)</li>
         </ul>
     </change-notes>
 

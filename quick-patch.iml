@@ -6,6 +6,11 @@
       <configuration>
         <option name="compilerLibraryLevel" value="Global" />
         <option name="compilerLibraryName" value="scala-compiler-2.8.1" />
+        <option name="deprecationWarnings" value="true" />
+        <option name="explainTypeErrors" value="true" />
+        <option name="fsc" value="true" />
+        <option name="languageLevel" value="Scala 2.9" />
+        <option name="uncheckedWarnings" value="true" />
       </configuration>
     </facet>
   </component>
@@ -15,12 +20,24 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="IDEA IU-103.72" jdkType="IDEA JDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="scala-compiler-2.9.2" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scala-library.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scala-library-2.9.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/scala-swing-2.9.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -29,25 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scala-swing.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scala-compiler.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scalaj-collection_2.8.1-1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scalaj-collection_2.9.1-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -24,7 +24,7 @@ trait PersistentState {
   def options: Map[String, Any]
 
   final def loadState(state: Element) {
-    loggingAsWarn("Can't load settings for Quick Patch") {
+    logExceptionAsWarn("Can't load settings for Quick Patch") {
       doLoad(state)
     }
   }

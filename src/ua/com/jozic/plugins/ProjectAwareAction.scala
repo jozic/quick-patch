@@ -5,10 +5,7 @@ import com.intellij.openapi.actionSystem.{PlatformDataKeys, AnActionEvent, AnAct
 trait ProjectAwareAction {
   self: AnAction =>
 
-  def project(event: AnActionEvent) = event.getData(PlatformDataKeys.PROJECT);
+  def project(event: AnActionEvent) = event.getData(PlatformDataKeys.PROJECT)
 
-  def projectOpt(event: AnActionEvent) = project(event) match {
-    case null => None
-    case p => Some(p)
-  }
+  def projectOpt(event: AnActionEvent) = Option(project(event))
 }

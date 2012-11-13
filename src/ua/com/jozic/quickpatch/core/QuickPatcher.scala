@@ -17,17 +17,20 @@ abstract class QuickPatcher(val project: Project) {
 
   def prefix = ""
 
-  def normalizeLocation = if (location.endsWith("/")) location else location + "/"
-
   def makePatch(list: LocalChangeList) {
-    val fileName = normalizeLocation + prefix + URLEncoder.encode(list.getName) + extension
-    val writer = new OutputStreamWriter(new FileOutputStream(fileName))
+    // use more scala-ish way
+    val writer = new OutputStreamWriter(new FileOutputStream(patchFileName(list)))
     try {
       val patches = IdeaTextPatchBuilder.buildPatch(project,
         list.getChanges, project.getBaseDir.getPresentableUrl, false)
-      UnifiedDiffWriter.write(patches, writer, lineSeparator)
+      UnifiedDiffWriter.write(project, patches, writer, lineSeparator, null)
     } finally {
       writer.close()
     }
+  }
+
+  def patchFileName(list: LocalChangeList): String = {
+    val normalizedLocation = if (location.endsWith("/")) location else location + "/"
+    normalizedLocation + prefix + URLEncoder.encode(list.getName, "UTF-8") + extension
   }
 }
