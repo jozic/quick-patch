@@ -3,16 +3,17 @@ package ua.com.jozic.plugins
 import com.intellij.openapi.diagnostic.Logger
 import scala.util.control.Exception._
 
-trait LoggingExceptions {
+trait LoggingExceptions[R] {
 
   def loggerCategory: String
 
-  lazy val logger = Logger.getInstance(loggerCategory)
+  lazy val logger = getLogger
 
-  def logExceptionAsWarn[E <: Exception](message: String)(body: => Unit)(implicit m: scala.reflect.ClassManifest[E]) {
-    val handler = handling(m.erasure) by {
-      logger.warn(message, _)
+  protected def getLogger: Logger = Logger.getInstance(loggerCategory)
+
+  def logExceptionAsWarn[E <: Exception](message: String)(body: => R)(implicit m: scala.reflect.ClassManifest[E]): Option[R] =
+    catching(m.erasure) either (body) match {
+      case Left(t) => logger.warn(message, t); None
+      case Right(result) => Some(result)
     }
-    handler(body)
-  }
 }

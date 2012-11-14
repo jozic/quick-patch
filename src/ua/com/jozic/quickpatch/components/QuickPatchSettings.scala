@@ -2,32 +2,40 @@ package ua.com.jozic.quickpatch.components
 
 import org.jdom.Element
 import java.io.File
-import ua.com.jozic.plugins.{LoggingExceptions, PersistentState}
+import ua.com.jozic.plugins.PersistentState
 
-class QuickPatchSettings extends PersistentState with LoggingExceptions {
+case class QuickPatchSettings(
+                               location: String = "",
+                               saveDefault: Boolean = true,
+                               saveEmpty: Boolean = false,
+                               addProjectName: Boolean = false) {
 
-  private val LOCATION = "location"
-  private val SAVE_DEFAULT = "save_default"
-  private val SAVE_EMPTY = "save_empty"
-  private val ADD_PROJECT_NAME = "add_project_name"
+  import QuickPatchSettings._
+  def options = Map(
+    LOCATION -> location,
+    SAVE_DEFAULT -> saveDefault,
+    SAVE_EMPTY -> saveEmpty,
+    ADD_PROJECT_NAME -> addProjectName)
 
-  var location = ""
-  var saveDefault = true
-  var saveEmpty = false
-  var addProjectName = false
+  def notReady = location.isEmpty || !new File(location).exists()
 
-  def options = Map(LOCATION -> location, SAVE_DEFAULT -> saveDefault,
-    SAVE_EMPTY -> saveEmpty, ADD_PROJECT_NAME -> addProjectName)
+  def locationDoesntExist = !location.isEmpty && !new File(location).exists
+}
 
-  def doLoad(state: Element) {
-    location = stringValue(state, LOCATION)
-    saveDefault = booleanValue(state, SAVE_DEFAULT)
-    saveEmpty = booleanValue(state, SAVE_EMPTY)
-    addProjectName = booleanValue(state, ADD_PROJECT_NAME)
-  }
-
+object QuickPatchSettings extends PersistentState[QuickPatchSettings] {
 
   val loggerCategory = "#ua.com.jozic.plugins.QuickPatchPlugin"
 
-  def notReady = location.isEmpty || !new File(location).exists()
+  val LOCATION = "location"
+  val SAVE_DEFAULT = "save_default"
+  val SAVE_EMPTY = "save_empty"
+  val ADD_PROJECT_NAME = "add_project_name"
+
+  def doLoad(state: Element): QuickPatchSettings =
+    QuickPatchSettings(
+      location = stringValue(state, LOCATION),
+      saveDefault = booleanValue(state, SAVE_DEFAULT),
+      saveEmpty = booleanValue(state, SAVE_EMPTY),
+      addProjectName = booleanValue(state, ADD_PROJECT_NAME)
+    )
 }

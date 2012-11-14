@@ -10,5 +10,3 @@ trait MessageBundle {
 
   def bundleName: String
 }
-
-

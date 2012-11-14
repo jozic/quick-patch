@@ -12,12 +12,8 @@ import ua.com.jozic.plugins.{Notifications, ProjectComponentsAware, ProjectAware
 trait BasePatchesAction extends AnAction with ApplicationComponentsAware with ProjectAwareAction
 with ProjectComponentsAware with Notifications {
   def actionPerformed(event: AnActionEvent) {
-    if (patchConfigurationComponent.settings.notReady) {
-      doNotify(notReady, project(event))
-    }
-    else {
-      doAction(event)
-    }
+    if (patchConfigurationComponent.settings.notReady) doNotify(notReady, project(event))
+    else doAction(event)
   }
 
   def doAction(event: AnActionEvent)

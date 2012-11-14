@@ -7,18 +7,20 @@ import com.intellij.openapi.components.{Storage, PersistentStateComponent, State
 import org.jdom.Element
 import com.intellij.openapi.util.IconLoader
 
-@State(name = "QuickPatchSettings",
+@State(name = "QuickPatchSettings$MODULE",
   storages = Array(new Storage(id = "default", file = "$APP_CONFIG$/qp.xml")))
 class QuickPatchSettingsComponent extends ApplicationComponent with Configurable
 with ProjectComponentsAware with PersistentStateComponent[Element] {
 
-  var settings = new QuickPatchSettings
-  val settingsUI = new QuickPatchSettingsUI(settings)
+  var settings: QuickPatchSettings = QuickPatchSettings()
 
-  def getState = settings.getState
+  val settingsUI = new QuickPatchSettingsUI
+
+  def getState = QuickPatchSettings.getState(settings.options)
 
   def loadState(state: Element) {
-    settings.loadState(state)
+    for (qps <- QuickPatchSettings.loadState(state, "Can't load settings for Quick Patch"))
+      settings = qps
   }
 
   def initComponent() {}
@@ -36,14 +38,15 @@ with ProjectComponentsAware with PersistentStateComponent[Element] {
   def disposeUIResources() {}
 
   def reset() {
-    settingsUI.updateUI()
+    settingsUI.updateUI(settings)
   }
 
   def apply() {
-    settingsUI.updateModel()
+    settings = settingsUI.currentSettings
+    settingsUI.checkIfReadyToUse(settings)
   }
 
-  def isModified = settingsUI.isModified
+  def isModified = settingsUI.isModified(settings)
 
   def createComponent = settingsUI.jComponent
 }
