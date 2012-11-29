@@ -4,19 +4,38 @@ import swing._
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
 import java.io.File
 import ua.com.jozic.plugins.Notifications
+import javax.swing.filechooser.FileFilter
 
 class QuickPatchSettingsUI extends Notifications {
 
   val pathText = new Label(message("location.field.text"))
   val locationField = new TextField(columns = 30)
+  val fileChooser = new FileChooser {
+    fileSelectionMode = FileChooser.SelectionMode.DirectoriesOnly
+    peer.setAcceptAllFileFilterUsed(false)
+    fileFilter = new FileFilter {
+      def getDescription = message("filefilter.description.text")
+
+      def accept(f: File) = f.isDirectory
+    }
+  }
+  val locationBrowseButton = Button("...") {
+    fileChooser.peer.setCurrentDirectory(new File(locationField.text))
+    fileChooser.showDialog(panel, message("filechooser.select.button.text")) match {
+      case FileChooser.Result.Approve =>
+        locationField.text = fileChooser.selectedFile.getAbsolutePath
+      case _ =>
+    }
+  }
   val saveDefaultField = new CheckBox(message("default.field.text"))
   val saveEmptyField = new CheckBox(message("empty.field.text"))
   val addProjectNameField = new CheckBox(message("project.field.text"))
 
-  val panel = new BoxPanel(Orientation.Vertical) {
+  val panel: BoxPanel = new BoxPanel(Orientation.Vertical) {
     contents += new FlowPanel {
       contents += pathText
       contents += locationField
+      contents += locationBrowseButton
     }
     contents += saveDefaultField
     contents += saveEmptyField
@@ -39,9 +58,9 @@ class QuickPatchSettingsUI extends Notifications {
     addProjectName = addProjectNameField.selected)
 
   def isModified(settings: QuickPatchSettings) = settings.location != locationField.text ||
-    settings.saveDefault != saveDefaultField.selected ||
-    settings.saveEmpty != saveEmptyField.selected ||
-    settings.addProjectName != addProjectNameField.selected
+          settings.saveDefault != saveDefaultField.selected ||
+          settings.saveEmpty != saveEmptyField.selected ||
+          settings.addProjectName != addProjectNameField.selected
 
   def checkIfReadyToUse(settings: QuickPatchSettings) {
     checkLocationIsNonEmpty(settings)
@@ -61,7 +80,7 @@ class QuickPatchSettingsUI extends Notifications {
         case Dialog.Result.Yes => tryCreateLocation(settings.location)
         case _ =>
       }
-  }
+    }
 
   def tryCreateLocation(location: String) {
     if (!new File(location).mkdir())
