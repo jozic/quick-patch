@@ -25,6 +25,13 @@
     <option name="FILTER_BY_STATUS" value="false" />
     <option name="SHOW_CLOSE_PROMPT" value="true" />
   </component>
+  <component name="CheckStyle-IDEA">
+    <option name="configuration">
+      <map>
+        <entry key="location-0" value="CLASSPATH:/sun_checks.xml:The default CheckStyle rules" />
+      </map>
+    </option>
+  </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -55,7 +62,7 @@
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA IU-122.746" project-jdk-type="IDEA JDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA IU-103.72" project-jdk-type="IDEA JDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="Regex">

@@ -21,18 +21,15 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="IDEA IU-103.72" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="scala-compiler-2.9.2" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/scala-library-2.9.2.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2-sources.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -53,16 +50,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://$APPLICATION_HOME_DIR$/bin" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" scope="TEST" name="scalatest_2.9.1-1.7.1" level="application" />
+    <orderEntry type="library" name="scala-compiler-2.9.2" level="application" />
+    <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.9.2:2.0.M5" level="project" />
   </component>
 </module>
 
