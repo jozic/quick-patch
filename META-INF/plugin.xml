@@ -4,18 +4,20 @@
     <version>0.0.3</version>
     <vendor email="jozic@ua.fm"
             logo="/ua/com/jozic/quickpatch/icons/logo.png"
-            url="https://github.com/jozic/quick-patch">Ievgen Platonov
+            url="https://github.com/jozic/quick-patch">Eugene Platonov
     </vendor>
     <category>VCS Integration</category>
     <idea-version since-build="122746"/>
     <resource-bundle>ua.com.jozic.quickpatch.QuickPatchMessageBundle</resource-bundle>
 
     <change-notes>
+        <![CDATA[
         <ul>
-            <li>0.0.1 initial version - save patches to the specified directory</li>
-            <li>0.0.2 bug fixes</li>
             <li>0.0.3 Support for IDEA 12 (Leda)</li>
+            <li>0.0.2 bug fixes</li>
+            <li>0.0.1 initial version - save patches to the specified directory</li>
         </ul>
+        ]]>
     </change-notes>
 
     <application-components>
@@ -45,10 +47,10 @@
             <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
         </action>
-        <action id="RestorePatches" class="ua.com.jozic.quickpatch.actions.RestorePatchesAction"
-                icon="/ua/com/jozic/quickpatch/icons/restore.patch.png">
-            <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
-        </action>
+        <!--<action id="RestorePatches" class="ua.com.jozic.quickpatch.actions.RestorePatchesAction"-->
+                <!--icon="/ua/com/jozic/quickpatch/icons/restore.patch.png">-->
+            <!--<add-to-group group-id="ChangesViewToolbar" anchor="last"/>-->
+        <!--</action>-->
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
