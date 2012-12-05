@@ -21,7 +21,7 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="jdk" jdkName="IDEA IU-103.72" jdkType="IDEA JDK" />
+    <orderEntry type="jdk" jdkName="IDEA IU-123.67" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -50,8 +50,15 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="scala-compiler-2.9.2" level="application" />
-    <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.9.2:2.0.M5" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/scalatest_2.9.2-2.0.M5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
