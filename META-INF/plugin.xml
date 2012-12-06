@@ -7,7 +7,7 @@
             url="https://github.com/jozic/quick-patch">Eugene Platonov
     </vendor>
     <category>VCS Integration</category>
-    <idea-version since-build="122746"/>
+    <idea-version since-build="122.746"/>
     <resource-bundle>ua.com.jozic.quickpatch.QuickPatchMessageBundle</resource-bundle>
 
     <change-notes>
