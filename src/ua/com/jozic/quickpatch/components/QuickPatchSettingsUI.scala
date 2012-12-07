@@ -31,15 +31,19 @@ class QuickPatchSettingsUI extends Notifications {
   val saveEmptyField = new CheckBox(message("empty.field.text"))
   val addProjectNameField = new CheckBox(message("project.field.text"))
 
-  val panel: BoxPanel = new BoxPanel(Orientation.Vertical) {
-    contents += new FlowPanel {
-      contents += pathText
-      contents += locationField
-      contents += locationBrowseButton
-    }
-    contents += saveDefaultField
-    contents += saveEmptyField
-    contents += addProjectNameField
+  val panel: BorderPanel = new BorderPanel {
+    layout(new BorderPanel {
+      layout(new FlowPanel {
+        contents += pathText
+        contents += locationField
+        contents += locationBrowseButton
+      }) = BorderPanel.Position.West
+    }) = BorderPanel.Position.North
+    layout(new BoxPanel(Orientation.Vertical) {
+      contents += saveDefaultField
+      contents += saveEmptyField
+      contents += addProjectNameField
+    }) = BorderPanel.Position.Center
   }
 
   def jComponent = panel.peer
@@ -58,9 +62,9 @@ class QuickPatchSettingsUI extends Notifications {
     addProjectName = addProjectNameField.selected)
 
   def isModified(settings: QuickPatchSettings) = settings.location != locationField.text ||
-          settings.saveDefault != saveDefaultField.selected ||
-          settings.saveEmpty != saveEmptyField.selected ||
-          settings.addProjectName != addProjectNameField.selected
+    settings.saveDefault != saveDefaultField.selected ||
+    settings.saveEmpty != saveEmptyField.selected ||
+    settings.addProjectName != addProjectNameField.selected
 
   def checkIfReadyToUse(settings: QuickPatchSettings) {
     checkLocationIsNonEmpty(settings)
@@ -80,7 +84,7 @@ class QuickPatchSettingsUI extends Notifications {
         case Dialog.Result.Yes => tryCreateLocation(settings.location)
         case _ =>
       }
-    }
+  }
 
   def tryCreateLocation(location: String) {
     if (!new File(location).mkdir())
