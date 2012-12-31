@@ -21,7 +21,7 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="jdk" jdkName="IDEA IU-123.67" jdkType="IDEA JDK" />
+    <orderEntry type="jdk" jdkName="IDEA IU-123.94" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -36,15 +36,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/scala-swing-2.9.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scalaj-collection_2.9.1-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

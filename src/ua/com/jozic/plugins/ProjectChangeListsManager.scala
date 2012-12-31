@@ -1,14 +1,14 @@
 package ua.com.jozic.plugins
 
 import com.intellij.openapi.project.Project
-import scalaj.collection.Imports._
-import com.intellij.openapi.vcs.changes.ChangeListManager
+import collection.JavaConverters._
+import com.intellij.openapi.vcs.changes.{LocalChangeList, ChangeListManager}
 
 case class ProjectChangeListsManager(project: Project) {
 
   private val manager = ChangeListManager.getInstance(project)
 
-  def changeLists = manager.getChangeLists.asScala
+  def changeLists: List[LocalChangeList] = manager.getChangeLists.asScala.toList
 
   def nonEmptyChangeLists = changeLists.filterNot(_.getChanges.isEmpty)
 
