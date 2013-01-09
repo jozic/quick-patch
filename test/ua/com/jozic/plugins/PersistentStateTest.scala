@@ -14,7 +14,7 @@ class PersistentStateTest extends FunSuite {
 
   def options: Map[String, Any] = Map(
     "stringOption" -> "string",
-    "booleanOption" -> false
+    "booleanOption" -> true
   )
 
   val ps = new PersistentState[Unit] {
@@ -28,7 +28,7 @@ class PersistentStateTest extends FunSuite {
   test("get state") {
     val expected: Node = trim(<settings>
       <option value="string" name="stringOption"></option>
-      <option value="false" name="booleanOption"></option>
+      <option value="true" name="booleanOption"></option>
     </settings>)
 
     val xml: Elem = ps.getState(options)
@@ -39,11 +39,20 @@ class PersistentStateTest extends FunSuite {
     val state: Element = ps.getState(options)
 
     assert(ps.stringValue(state, "stringOption") === "string")
+    assert(ps.stringValue(state, "unknownOption") === "")
   }
 
   test("get boolean option") {
     val state: Element = ps.getState(options)
 
-    assert(ps.booleanValue(state, "booleanOption") === false)
+    assert(ps.booleanValue(state, "booleanOption") === true)
+    assert(ps.booleanValue(state, "unknownOption") === false)
+  }
+
+  test("get Some string option") {
+    val state: Element = ps.getState(options)
+
+    assert(ps.stringOption(state, "unknownOption") === None)
+    assert(ps.stringOption(state, "stringOption") === Some("string"))
   }
 }

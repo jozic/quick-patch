@@ -12,13 +12,14 @@ class QuickPatcherComponent(val project: Project) extends BaseQuickPatchComponen
   val quickPatcher = new QuickPatcher(project) {
     def location = settings.location
 
-    override def prefix = if (settings.addProjectName) project.getName + "." else super.prefix
+    override def prefix = if (settings.addProjectName) this.project.getName + "." else super.prefix
   }
 
   val needToSave = (list: LocalChangeList) => {
     val dontSaveDefault = list.hasDefaultName && !settings.saveDefault
     val dontSaveEmpty = list.getChanges.isEmpty && !settings.saveEmpty
-    !(dontSaveDefault || dontSaveEmpty)
+    val ignoreByPattern = settings.ignorePattern map (_.r.pattern.matcher(list.getName).matches) getOrElse false
+    !(dontSaveDefault || dontSaveEmpty || ignoreByPattern)
   }
 
   def getComponentName = "QuickPatcherComponent"

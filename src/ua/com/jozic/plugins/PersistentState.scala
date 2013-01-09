@@ -10,10 +10,12 @@ trait PersistentState[S] extends LoggingExceptions[S] {
   private def option(name: String, value: Any) =
     elem("option").setAttribute("name", name).setAttribute("value", value.toString)
 
-  protected[plugins] def stringValue(state: Element, name: String): String =
-    XPath.selectSingleNode(state, "./option[@name='" + name + "']/@value").asInstanceOf[Attribute].getValue
+  protected[plugins] def stringOption(state: Element, name: String): Option[String] =
+    Option(XPath.selectSingleNode(state, "./option[@name='" + name + "']/@value").asInstanceOf[Attribute]) map (_.getValue)
 
-  protected[plugins] def booleanValue(state: Element, name: String) = stringValue(state, name).toBoolean
+  protected[plugins] def stringValue(state: Element, name: String): String = stringOption(state, name) getOrElse ""
+
+  protected[plugins] def booleanValue(state: Element, name: String): Boolean = stringOption(state, name) map (_.toBoolean) getOrElse false
 
   final def getState(options: Map[String, Any]): Element = options.foldLeft(elem("settings")) {
     case (e, (name, value)) => e.addContent(option(name, value))

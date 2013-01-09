@@ -4,6 +4,6 @@ import com.intellij.openapi.project.Project
 
 trait ProjectComponentsAware {
 
-  def projectComponent[Component](project: Project)(implicit m: scala.reflect.ClassManifest[Component]) =
+  final def projectComponent[Component](project: Project)(implicit m: ClassManifest[Component]) =
     project.getComponent(m.erasure.asInstanceOf[Class[Component]])
 }

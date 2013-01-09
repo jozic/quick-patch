@@ -4,6 +4,6 @@ import com.intellij.openapi.application.ApplicationManager
 
 trait ApplicationComponentsAware {
 
-  def applicationComponent[Component](implicit m: scala.reflect.ClassManifest[Component]) =
+  final def applicationComponent[Component](implicit m: ClassManifest[Component]) =
     ApplicationManager.getApplication.getComponent(m.erasure.asInstanceOf[Class[Component]])
 }
