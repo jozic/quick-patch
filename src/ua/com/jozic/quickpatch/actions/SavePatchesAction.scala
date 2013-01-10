@@ -17,19 +17,10 @@ class SavePatchesAction extends BasePatchesAction with SettingsAware {
     message("save.notification.content", "dir"))
 
   override def update(event: AnActionEvent) {
-    val presentation = event.getPresentation
-    presentation.setEnabled(actionEnabled(event))
+    event.getPresentation.setEnabled(actionEnabled(event))
   }
 
   def actionEnabled(event: AnActionEvent) = projectOpt(event) map {
-    p =>
-      val changeListsManager = ProjectChangeListsManager(p)
-      val hasChangeLists = !changeListsManager.hasNoChangeLists
-      val onlyDefaultList = !settings.saveDefault && changeListsManager.hasOnlyDefaultChangeList
-      val onlyEmptyLists = !settings.saveEmpty &&
-        (if (settings.saveDefault) changeListsManager.hasOnlyEmptyChangeLists
-        else changeListsManager.hasOnlyEmptyChangeListsExceptDefault)
-      hasChangeLists && !onlyDefaultList && !onlyEmptyLists
-
+    p => ProjectChangeListsManager(p).changeLists.exists(projectComponent[QuickPatcherComponent](p).needToSave)
   } getOrElse false
 }

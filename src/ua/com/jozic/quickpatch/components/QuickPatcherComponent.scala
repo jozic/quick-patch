@@ -25,7 +25,6 @@ class QuickPatcherComponent(val project: Project) extends BaseQuickPatchComponen
   def getComponentName = "QuickPatcherComponent"
 
   def makePatches() {
-    for (list <- changeListsManager.changeLists if needToSave(list))
-      quickPatcher.makePatch(list)
+    changeListsManager.changeLists filter (needToSave) foreach (quickPatcher.makePatch)
   }
 }
