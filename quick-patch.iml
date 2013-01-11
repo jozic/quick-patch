@@ -9,7 +9,6 @@
         <option name="deprecationWarnings" value="true" />
         <option name="explainTypeErrors" value="true" />
         <option name="fsc" value="true" />
-        <option name="languageLevel" value="Scala 2.9" />
         <option name="uncheckedWarnings" value="true" />
       </configuration>
     </facet>
@@ -26,16 +25,19 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scala-library-2.9.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scala-library-2.10.0.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/lib/scala-library-2.10.0-src.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scala-library-2.10.0-src.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scala-swing-2.9.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scala-swing-2.10.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -44,7 +46,7 @@
     <orderEntry type="module-library" scope="TEST">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scalatest_2.9.2-2.0.M5.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/scalatest_2.10-1.9.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
