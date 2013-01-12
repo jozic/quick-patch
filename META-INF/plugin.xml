@@ -1,7 +1,32 @@
 <idea-plugin version="2">
     <name>Quick Patch</name>
-    <description>Save your patches at one click</description>
-    <version>0.0.3</version>
+    <description>
+        <![CDATA[
+        <h3>Quick Patch plugin: Save your patches at one click!</h3>
+        <p>Quick Patch is an InterlliJ IDEA plugin which allows you to save all the change lists you want as patches.<br/>
+        <h4>Idea</h4>
+        The major use case is you have a project with some "ancient" vcs (like svn) where branching is painful and you have some unfinished work you want to:
+        <ul>
+        <li>share it with someone</li>
+        <li>finish it later and/or at some other place (home vs office)</li>
+        </ul>
+        <p>
+        So in both cases you need to create a patch of what you have done so far. It's pretty easy to do that in Intellij, but we can do better. Quick Patch will save all your changes at one click or a key stroke (there is one assigned by default, but you can change it).<br/>
+        <br/>
+        When you want to continue your hacking, let's say at home, you need to move your patches somehow. Dropbox to the rescue! Quick patch idea works really nice with Dropbox (and friends). You can set up plugin to save you patches into Dropbox directory and you are done! One key stroke and you ready to go, your patches are already waiting for you at home.
+        <h4>Settings</h4>
+        To configure the plugin go to Settings -> Quick Patch<br/>
+        <br/>
+        <strong>Save my patches to</strong> - select a directory where your patches should be stored. You will get a growl if you try to save patches without directory selected.<br/>
+        <strong>Save Default change list</strong> - Mark it if you want to save "Default" changelist. Marked by default.<br/>
+        <strong>Save empty change lists</strong> - Mark it if you want to save empty change lists as patch files. Unmarked by default.<br/>
+        <strong>Add project name as prefix</strong> - Usefull when you work on multiple projects and want to distinguish your patches later.<br/>
+        <strong>Ignore change lists pattern</strong> - Type in a valid regex to ignore change lists you don't want to save. If the field is empty or regex isn't valid then this option will be ignored.<br/>
+        <h4>Usage</h4>
+        When the plugin is installed you get an additional action on IDEA's Changes panel. If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
+        ]]>
+    </description>
+    <version>0.0.4</version>
     <vendor email="jozic@ua.fm"
             logo="/ua/com/jozic/quickpatch/icons/logo.png"
             url="https://github.com/jozic/quick-patch">Eugene Platonov
@@ -13,9 +38,30 @@
     <change-notes>
         <![CDATA[
         <ul>
-            <li>0.0.3 Support for IDEA 12 (Leda)</li>
-            <li>0.0.2 bug fixes</li>
-            <li>0.0.1 initial version - save patches to the specified directory</li>
+            <li>0.0.4
+                <ul>
+                    <li>Ignore change lists by pattern</li>
+                    <li>Clean UI settings</li>
+                    <li>Basic documentation added</li>
+                </ul>
+             </li>
+            <li>0.0.3
+                <ul>
+                    <li>Support for IDEA 12 (Leda)</li>
+                    <li>FileChooser for location field</li>
+                </ul>
+             </li>
+            <li>0.0.2
+                <ul>
+                    <li>Bug fixes</li>
+                    <li>Disable action if there is nothing to save</li>
+                </ul>
+            </li>
+            <li>0.0.1
+                <ul>
+                    <li>Initial version - save patches to the specified directory</li>
+                </ul>
+            </li>
         </ul>
         ]]>
     </change-notes>
@@ -48,8 +94,8 @@
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
         </action>
         <!--<action id="RestorePatches" class="ua.com.jozic.quickpatch.actions.RestorePatchesAction"-->
-                <!--icon="/ua/com/jozic/quickpatch/icons/restore.patch.png">-->
-            <!--<add-to-group group-id="ChangesViewToolbar" anchor="last"/>-->
+        <!--icon="/ua/com/jozic/quickpatch/icons/restore.patch.png">-->
+        <!--<add-to-group group-id="ChangesViewToolbar" anchor="last"/>-->
         <!--</action>-->
     </actions>
 
