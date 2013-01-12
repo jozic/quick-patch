@@ -19,12 +19,12 @@ You can set up plugin to save you patches into Dropbox directory and you are don
 
 To configure the plugin go to Settings -> Quick Patch  
 
-![Quick Patch settings](https://raw.github.com/jozic/quick-patch/issue%237/doc/quick-patch-settings.png)
+![Quick Patch settings](https://raw.github.com/jozic/quick-patch/master/doc/quick-patch-settings.png)
 
 **Save my patches to** - select a directory where your patches should be stored. You will get a growl if you try to save patches without directory selected.  
 **Save Default change list** - Mark it if you want to save "Default" changelist. Marked by default.  
 **Save empty change lists** - Mark it if you want to save empty change lists as patch files. Unmarked by default.  
-**Add project name as prefix** - Usefull when you work on multiple projects and want to distinguish your patches later.  
+**Add project name as prefix** - Useful when you work on multiple projects and want to distinguish your patches later.  
 **Ignore change lists pattern** - Type in a valid regex to ignore change lists you don't want to save. If the field is empty or regex isn't valid then this option will be ignored.
 
 ## Usage
@@ -32,7 +32,7 @@ To configure the plugin go to Settings -> Quick Patch
 When the plugin is installed you get an additional action on IDEA's Changes panel. 
 If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
 
-![IDEA's Changes panel](https://raw.github.com/jozic/quick-patch/issue%237/doc/changes-panel.png)
+![IDEA's Changes panel](https://raw.github.com/jozic/quick-patch/master/doc/changes-panel.png)
 
 ## Change log
 
