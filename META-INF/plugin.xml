@@ -20,7 +20,7 @@
         <strong>Save my patches to</strong> - select a directory where your patches should be stored. You will get a growl if you try to save patches without directory selected.<br/>
         <strong>Save Default change list</strong> - Mark it if you want to save "Default" changelist. Marked by default.<br/>
         <strong>Save empty change lists</strong> - Mark it if you want to save empty change lists as patch files. Unmarked by default.<br/>
-        <strong>Add project name as prefix</strong> - Usefull when you work on multiple projects and want to distinguish your patches later.<br/>
+        <strong>Add project name as prefix</strong> - Useful when you work on multiple projects and want to distinguish your patches later.<br/>
         <strong>Ignore change lists pattern</strong> - Type in a valid regex to ignore change lists you don't want to save. If the field is empty or regex isn't valid then this option will be ignored.<br/>
         <h4>Usage</h4>
         When the plugin is installed you get an additional action on IDEA's Changes panel. If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
