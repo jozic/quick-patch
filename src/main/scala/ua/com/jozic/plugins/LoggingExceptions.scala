@@ -1,6 +1,8 @@
 package ua.com.jozic.plugins
 
 import com.intellij.openapi.diagnostic.Logger
+
+import scala.reflect.{ClassTag, classTag}
 import scala.util.control.Exception._
 
 trait LoggingExceptions[R] {
@@ -11,8 +13,8 @@ trait LoggingExceptions[R] {
 
   protected def getLogger: Logger = Logger.getInstance(loggerCategory)
 
-  def logExceptionAsWarn[E <: Exception](message: String)(body: => R)(implicit m: scala.reflect.ClassTag[E]): Option[R] =
-    catching(m.runtimeClass) either (body) match {
+  def logExceptionAsWarn[E <: Exception : ClassTag](message: String)(body: => R): Option[R] =
+    catching(classTag[E].runtimeClass).either(body) match {
       case Left(t) => logger.warn(message, t); None
       case Right(result) => Some(result)
     }

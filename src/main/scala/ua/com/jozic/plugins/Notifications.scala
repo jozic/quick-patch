@@ -8,16 +8,12 @@ trait Notifications {
     JBNotifications.Bus.notify(notification, project)
   }
 
-  def doNotify(notification: Notification) {
-    JBNotifications.Bus.notify(notification)
-  }
-
-  def success(groupId: String, title: String, content: String) =
+  def success(groupId: String, title: String, content: String): Notification =
     new Notification(groupId, title, content, NotificationType.INFORMATION)
 
-  def warning(groupId: String, title: String, content: String) =
+  def warning(groupId: String, title: String, content: String): Notification =
     new Notification(groupId, title, content, NotificationType.WARNING)
 
-  def failure(groupId: String, title: String, content: String) =
+  def failure(groupId: String, title: String, content: String): Notification =
     new Notification(groupId, title, content, NotificationType.ERROR)
 }

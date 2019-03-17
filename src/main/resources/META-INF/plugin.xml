@@ -1,9 +1,9 @@
-<idea-plugin version="2">
+<idea-plugin>
     <name>Quick Patch</name>
     <description>
         <![CDATA[
         <h3>Quick Patch plugin: Save your patches at one click!</h3>
-        <p>Quick Patch is an InterlliJ IDEA plugin which allows you to save all the change lists you want as patches.<br/>
+        <p>Quick Patch is an IntelliJ IDEA plugin which allows you to save all the change lists you want as patches.<br/>
         <h4>Idea</h4>
         The major use case is you have a project with some "ancient" vcs (like svn) where branching is painful and you have some unfinished work you want to:
         <ul>
@@ -26,18 +26,22 @@
         When the plugin is installed you get an additional action on IDEA's Changes panel. If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
         ]]>
     </description>
-    <version>0.0.4</version>
-    <vendor email="jozic@ua.fm"
-            logo="/ua/com/jozic/quickpatch/icons/logo.png"
+    <version>0.1.0</version>
+    <vendor email="jozic@live.com"
             url="https://github.com/jozic/quick-patch">Eugene Platonov
     </vendor>
     <category>VCS Integration</category>
-    <idea-version since-build="122.746"/>
+    <idea-version since-build="181.4445.4"/>
     <resource-bundle>ua.com.jozic.quickpatch.QuickPatchMessageBundle</resource-bundle>
 
     <change-notes>
         <![CDATA[
         <ul>
+            <li>0.1.0
+                <ul>
+                    <li>Support for IDEA 2018.3</li>
+                </ul>
+             </li>
             <li>0.0.4
                 <ul>
                     <li>Ignore change lists by pattern</li>
@@ -66,14 +70,6 @@
         ]]>
     </change-notes>
 
-    <application-components>
-        <component>
-            <implementation-class>
-                ua.com.jozic.quickpatch.components.QuickPatchSettingsComponent
-            </implementation-class>
-        </component>
-    </application-components>
-
     <project-components>
         <component>
             <implementation-class>
@@ -100,6 +96,10 @@
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <projectConfigurable groupId="tools"
+                             displayName="Quick Patch"
+                             id="QuickPatchSettingsComponent"
+                             instance="ua.com.jozic.quickpatch.components.QuickPatchSettingsUI" />
+        <projectService serviceImplementation="ua.com.jozic.quickpatch.components.QuickPatchSettings"/>
     </extensions>
 </idea-plugin>

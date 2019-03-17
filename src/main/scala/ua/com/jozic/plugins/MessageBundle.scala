@@ -1,12 +1,11 @@
 package ua.com.jozic.plugins
 
-import com.intellij.CommonBundle
 import java.util.ResourceBundle
 
-trait MessageBundle {
+import com.intellij.CommonBundle
+
+class MessageBundle(bundleName: String) {
   lazy val bundle = ResourceBundle.getBundle(bundleName)
 
-  def message(key: String, params: Any*) = CommonBundle.message(bundle, key, params)
-
-  def bundleName: String
+  def message(key: String, params: AnyRef*) = CommonBundle.message(bundle, key, params: _*)
 }

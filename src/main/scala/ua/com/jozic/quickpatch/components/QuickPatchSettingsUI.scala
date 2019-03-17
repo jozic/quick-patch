@@ -1,15 +1,19 @@
 package ua.com.jozic.quickpatch.components
 
-import swing._
-import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
 import java.io.File
-import ua.com.jozic.plugins.Notifications
-import javax.swing.filechooser.FileFilter
-import java.util.regex.PatternSyntaxException
-import swing.Dialog.Message
-import scala.util.{Failure, Success, Try}
 
-class QuickPatchSettingsUI extends Notifications {
+import com.intellij.openapi.options.{ConfigurationException, SearchableConfigurable}
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.IconLoader
+import javax.swing.filechooser.FileFilter
+import javax.swing.{Icon, JPanel}
+import ua.com.jozic.plugins.Notifications
+import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
+
+import scala.swing._
+import scala.util.{Success, Try}
+
+class QuickPatchSettingsUI(project: Project) extends SearchableConfigurable with Notifications {
 
   val pathLabel = new Label(message("location.field.text"))
   val locationField = new TextField(columns = 30)
@@ -17,12 +21,12 @@ class QuickPatchSettingsUI extends Notifications {
     fileSelectionMode = FileChooser.SelectionMode.DirectoriesOnly
     peer.setAcceptAllFileFilterUsed(false)
     fileFilter = new FileFilter {
-      def getDescription = message("filefilter.description.text")
+      def getDescription: String = message("filefilter.description.text")
 
-      def accept(f: File) = f.isDirectory
+      def accept(f: File): Boolean = f.isDirectory
     }
   }
-  val locationBrowseButton = Button("...") {
+  val locationBrowseButton = Button(message("location.button.text")) {
     fileChooser.peer.setCurrentDirectory(new File(locationField.text))
     fileChooser.showDialog(panel, message("filechooser.select.button.text")) match {
       case FileChooser.Result.Approve =>
@@ -60,80 +64,104 @@ class QuickPatchSettingsUI extends Notifications {
     }) = BorderPanel.Position.Center
   }
 
-  def jComponent = panel.peer
+  override def getId = "QuickPatchSettingsUI"
 
-  def updateUI(settings: QuickPatchSettings) {
+  override def getDisplayName = "Quick Patch"
+
+  override def getHelpTopic = ""
+
+  def getIcon: Icon = IconLoader.getIcon("/ua/com/jozic/quickpatch/icons/quickpatch.png")
+
+  override def disposeUIResources(): Unit = ()
+
+  override def reset(): Unit = {
+    val settings = currentSettings
     locationField.text = settings.location
     saveDefaultField.selected = settings.saveDefault
     saveEmptyField.selected = settings.saveEmpty
     addProjectNameField.selected = settings.addProjectName
-    ignorePatternField.text = settings.ignorePattern getOrElse ""
+    ignorePatternField.text = settings.ignorePattern
   }
 
+  override def apply(): Unit = {
+    checkIfReadyToUse()
+    val settings = currentSettings
+    settings.location = locationField.text
+    settings.saveDefault = saveDefaultField.selected
+    settings.saveEmpty = saveEmptyField.selected
+    settings.addProjectName = addProjectNameField.selected
+    settings.ignorePattern = ignorePatternField.text
+  }
+
+  override def isModified: Boolean = {
+    val settings = currentSettings
+    settings.location != locationField.text ||
+      settings.saveDefault != saveDefaultField.selected ||
+      settings.saveEmpty != saveEmptyField.selected ||
+      settings.addProjectName != addProjectNameField.selected ||
+      settings.ignorePattern != ignorePatternField.text
+  }
+
+  override def createComponent: JPanel = panel.peer
+
   def ignorePatternTry: Try[Option[String]] = ignorePatternField.text match {
-    case text if !text.isEmpty => Try(Some(text.r.toString()))
+    case text if text.nonEmpty => Try(Some(text.r.regex))
     case _ => Success(None)
   }
 
-  def ignorePatternValue = ignorePatternTry.toOption.flatten
+  private def currentSettings = QuickPatchSettings(project)
 
-  def currentSettings = QuickPatchSettings(
-    location = locationField.text,
-    saveDefault = saveDefaultField.selected,
-    saveEmpty = saveEmptyField.selected,
-    addProjectName = addProjectNameField.selected,
-    ignorePattern = ignorePatternValue)
+  private def checkIfReadyToUse(): Unit = {
+    def checkLocationIsNonEmpty(): Unit = {
+      if (locationField.text.isEmpty)
+        doNotify(
+          warning(
+            groupId,
+            dialogTitle,
+            emptyLocationErrorMessage),
+          project
+        )
+    }
 
-  def isModified(settings: QuickPatchSettings) = settings.location != locationField.text ||
-          settings.saveDefault != saveDefaultField.selected ||
-          settings.saveEmpty != saveEmptyField.selected ||
-          settings.addProjectName != addProjectNameField.selected ||
-          settings.ignorePattern != ignorePatternValue
+    def checkLocationExists(): Unit = {
+      val location = locationField.text
+      if (location.nonEmpty && !new File(location).exists) {
+        Dialog.showConfirmation(
+          parent = panel,
+          message = locationDoesntExistMessage,
+          title = dialogTitle) match {
+          case Dialog.Result.Yes =>
+            if (!new File(location).mkdir())
+              throw new ConfigurationException(cantCreateLocationMessage, dialogTitle)
+          case _ =>
+            throw new ConfigurationException(locationDoesntExistErrorMessage, dialogTitle)
+        }
+      }
+    }
 
-  def checkIfReadyToUse(settings: QuickPatchSettings) {
-    checkLocationIsNonEmpty(settings)
-    checkLocationExists(settings)
+    def checkPatternIsCompilable(): Unit = {
+      ignorePatternTry.failed.foreach { e =>
+        throw new ConfigurationException(patternIsNotCompilableMessage(e.getMessage), dialogTitle)
+      }
+    }
+
+    checkLocationIsNonEmpty()
+    checkLocationExists()
     checkPatternIsCompilable()
   }
 
-  def checkLocationIsNonEmpty(settings: QuickPatchSettings) {
-    if (settings.location.isEmpty) {
-      val emptyFieldWarning = warning(message("notifications.group.id"), dialogTitle, message("empty.location.error.message.settings"))
-      doNotify(emptyFieldWarning)
-    }
-  }
+  private lazy val dialogTitle: String = message("dialog.title")
 
-  def checkLocationExists(settings: QuickPatchSettings) {
-    if (settings.locationDoesntExist) {
-      Dialog.showConfirmation(
-        parent = panel, message = message("location.not.exists.confirmation.message"),
-        title = dialogTitle) match {
-        case Dialog.Result.Yes => tryCreateLocation(settings.location)
-        case _ =>
-      }
-    }
-  }
+  private lazy val groupId: String = message("notifications.group.id")
 
-  def tryCreateLocation(location: String) {
-    if (!new File(location).mkdir()) {
-      Dialog.showMessage(
-        parent = panel,
-        message = message("cant.create.location.error.message"),
-        title = dialogTitle,
-        messageType = Dialog.Message.Error)
-    }
-  }
+  private lazy val emptyLocationErrorMessage = message("empty.location.error.message.settings")
 
-  def checkPatternIsCompilable() {
-    ignorePatternTry match {
-      case Failure(e: PatternSyntaxException) => Dialog.showMessage(
-        parent = panel,
-        message = message("pattern.is.not.compilable.error.message", e.getMessage),
-        title = dialogTitle,
-        messageType = Message.Error)
-      case _ =>
-    }
-  }
+  private lazy val locationDoesntExistMessage = message("location.doesnt.exist.confirmation.message")
 
-  lazy val dialogTitle = message("dialog.title")
+  private lazy val locationDoesntExistErrorMessage = message("location.doesnt.exist.error.message")
+
+  private lazy val cantCreateLocationMessage = message("cant.create.location.error.message")
+
+  @inline private def patternIsNotCompilableMessage(error: String) =
+    message("pattern.is.not.compilable.error.message", error)
 }

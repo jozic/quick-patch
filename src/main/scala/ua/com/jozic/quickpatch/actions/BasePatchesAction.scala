@@ -1,25 +1,25 @@
 package ua.com.jozic.quickpatch.actions
 
-import com.intellij.openapi.actionSystem.{AnActionEvent, AnAction}
+import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent}
+import ua.com.jozic.plugins._
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
-import ua.com.jozic.quickpatch.components.QuickPatchSettingsComponent
-import ua.com.jozic.plugins.{Notifications, ProjectComponentsAware, ProjectAwareAction, ApplicationComponentsAware}
+import ua.com.jozic.quickpatch.components.QuickPatchSettings
 
-/**
- * @author jozic
- * @since 2/28/11
- */
-trait BasePatchesAction extends AnAction with ApplicationComponentsAware with ProjectAwareAction
-with ProjectComponentsAware with Notifications {
-  def actionPerformed(event: AnActionEvent) {
-    if (patchConfigurationComponent.settings.notReady) doNotify(notReady, project(event))
-    else doAction(event)
+trait BasePatchesAction extends AnAction with Notifications {
+
+  val NotReady = failure(
+    message("notifications.group.id"),
+    message("dialog.title"),
+    message("empty.location.error.message.action")
+  )
+
+  def actionPerformed(event: AnActionEvent): Unit = {
+    if (QuickPatchSettings(event.getProject).notReady)
+      doNotify(NotReady, event.getProject)
+    else
+      doAction(event)
   }
 
-  def doAction(event: AnActionEvent)
+  def doAction(event: AnActionEvent): Unit
 
-  def patchConfigurationComponent = applicationComponent[QuickPatchSettingsComponent]
-
-  val notReady = failure(message("notifications.group.id"), message("dialog.title"),
-    message("empty.location.error.message.action"))
 }

@@ -1,45 +1,38 @@
 package ua.com.jozic.quickpatch.components
 
-import org.jdom.Element
 import java.io.File
-import ua.com.jozic.plugins.PersistentState
 
-case class QuickPatchSettings(location: String = "",
-                              saveDefault: Boolean = true,
-                              saveEmpty: Boolean = false,
-                              addProjectName: Boolean = false,
-                              ignorePattern: Option[String] = None) {
+import com.intellij.openapi.components._
+import com.intellij.openapi.project.Project
+import com.intellij.util.xmlb.XmlSerializerUtil
 
-  import QuickPatchSettings._
+import scala.beans.BeanProperty
 
-  def options = Map(
-    LOCATION -> location,
-    SAVE_DEFAULT -> saveDefault,
-    SAVE_EMPTY -> saveEmpty,
-    ADD_PROJECT_NAME -> addProjectName,
-    IGNORE_PATTERN -> ignorePattern.getOrElse(""))
+@State(
+  name = "QuickPatchSettings",
+  storages = Array(new Storage(StoragePathMacros.WORKSPACE_FILE))
+)
+class QuickPatchSettings extends PersistentStateComponent[QuickPatchSettings] {
 
-  def notReady = location.isEmpty || !new File(location).exists()
+  @BeanProperty var location: String = ""
+  @BeanProperty var saveDefault: Boolean = true
+  @BeanProperty var saveEmpty: Boolean = false
+  @BeanProperty var addProjectName: Boolean = false
+  @BeanProperty var ignorePattern: String = ""
 
-  def locationDoesntExist = !location.isEmpty && !new File(location).exists
+  override def loadState(config: QuickPatchSettings): Unit =
+    XmlSerializerUtil.copyBean(config, this)
+
+  override def getState: QuickPatchSettings = this
+
+  def notReady: Boolean = location.isEmpty || !new File(location).exists()
+
+  def locationDoesntExist: Boolean = location.nonEmpty && !new File(location).exists
+
+  def maybeIgnorePattern: Option[String] = if (ignorePattern.trim.isEmpty) None else Some(ignorePattern)
 }
 
-object QuickPatchSettings extends PersistentState[QuickPatchSettings] {
-
-  val loggerCategory = "#ua.com.jozic.plugins.QuickPatchPlugin"
-
-  val LOCATION = "location"
-  val SAVE_DEFAULT = "save_default"
-  val SAVE_EMPTY = "save_empty"
-  val ADD_PROJECT_NAME = "add_project_name"
-  val IGNORE_PATTERN = "ignore_pattern"
-
-  def doLoad(state: Element): QuickPatchSettings =
-    QuickPatchSettings(
-      location = stringValue(state, LOCATION),
-      saveDefault = booleanValue(state, SAVE_DEFAULT),
-      saveEmpty = booleanValue(state, SAVE_EMPTY),
-      addProjectName = booleanValue(state, ADD_PROJECT_NAME),
-      ignorePattern = stringOption(state, IGNORE_PATTERN)
-    )
+object QuickPatchSettings {
+  def apply(project: Project): QuickPatchSettings =
+    ServiceManager.getService(project, classOf[QuickPatchSettings])
 }
