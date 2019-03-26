@@ -15,7 +15,7 @@
         <br/>
         When you want to continue your hacking, let's say at home, you need to move your patches somehow. Dropbox to the rescue! Quick patch idea works really nice with Dropbox (and friends). You can set up plugin to save you patches into Dropbox directory and you are done! One key stroke and you ready to go, your patches are already waiting for you at home.
         <h4>Settings</h4>
-        To configure the plugin go to Settings -> Quick Patch<br/>
+        To configure the plugin go to Settings -> Tools -> Quick Patch<br/>
         <br/>
         <strong>Save my patches to</strong> - select a directory where your patches should be stored. You will get a growl if you try to save patches without directory selected.<br/>
         <strong>Save Default change list</strong> - Mark it if you want to save "Default" changelist. Marked by default.<br/>
