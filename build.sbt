@@ -7,6 +7,7 @@ lazy val quickPatch =
     .settings(
       name := "quick-patch",
       organization := "com.daodecode",
+      version := "0.1.0",
       scalaVersion := "2.12.8",
       scalacOptions := Seq(
         "-Xlint",

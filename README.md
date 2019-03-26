@@ -1,7 +1,7 @@
 Quick Patch plugin
 ===========
 
-Quick Patch is an InterlliJ IDEA plugin which allows you to save all the change lists you want as patches.
+Quick Patch is an IntelliJ IDEA plugin which allows you to save all the change lists you want as patches.
 
 ## Idea
 
@@ -17,9 +17,9 @@ You can set up plugin to save you patches into Dropbox directory and you are don
 
 ## Settings
 
-To configure the plugin go to Settings -> Quick Patch  
+To configure the plugin go to Settings -> Tools -> Quick Patch  
 
-![Quick Patch settings](https://raw.github.com/jozic/quick-patch/master/doc/quick-patch-settings.png)
+![Quick Patch settings](./doc/quick-patch-settings.png)
 
 **Save my patches to** - select a directory where your patches should be stored. You will get a growl if you try to save patches without directory selected.  
 **Save Default change list** - Mark it if you want to save "Default" changelist. Marked by default.  
@@ -32,12 +32,14 @@ To configure the plugin go to Settings -> Quick Patch
 When the plugin is installed you get an additional action on IDEA's Changes panel. 
 If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
 
-![IDEA's Changes panel](https://raw.github.com/jozic/quick-patch/master/doc/changes-panel.png)
+![IDEA's Changes panel](./doc/changes-panel.png)
 
 ## Change log
 
+  * 0.1.0   
+            - Support for IDEA 2018.1+  
   * 0.0.4   
-        - Ignore change lists by pattern  
+            - Ignore change lists by pattern  
 		    - Clean UI settings  
 		    - Basic documentation added
   * 0.0.3  
