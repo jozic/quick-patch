@@ -7,7 +7,7 @@ lazy val quickPatch =
     .settings(
       name := "quick-patch",
       organization := "com.daodecode",
-      version := "0.1.0",
+      version := "0.1.1",
       scalaVersion := "2.12.8",
       scalacOptions := Seq(
         "-Xlint",
@@ -28,7 +28,7 @@ lazy val quickPatch =
       libraryDependencies ++=
         Seq(
           "org.scala-lang.modules" %% "scala-swing" % "2.1.0",
-          "org.scalatest" %% "scalatest" % "3.0.6" % "test"
+          "org.scalatest" %% "scalatest" % "3.0.7" % "test"
         ),
       ideaPluginName in ThisBuild := "QuickPatch",
       ideaBuild := "2018.1.1",

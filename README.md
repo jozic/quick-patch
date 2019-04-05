@@ -1,7 +1,7 @@
 Quick Patch plugin
 ===========
 
-Quick Patch is an IntelliJ IDEA plugin which allows you to save all the change lists you want as patches.
+Quick Patch is a plugin which allows you to save all the change lists you want as patches.
 
 ## Idea
 
@@ -29,13 +29,15 @@ To configure the plugin go to Settings -> Tools -> Quick Patch
 
 ## Usage
 
-When the plugin is installed you get an additional action on IDEA's Changes panel. 
+When the plugin is installed you get an additional action on IDE's Changes panel. 
 If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
 
 ![IDEA's Changes panel](./doc/changes-panel.png)
 
 ## Change log
 
+  * 0.1.1   
+            - Update plugin descriptor so that it's available for all JetBrains products  
   * 0.1.0   
             - Support for IDEA 2018.1+  
   * 0.0.4   
