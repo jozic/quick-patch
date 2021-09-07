@@ -1,8 +1,9 @@
 package ua.com.jozic.plugins
 
+import scala.jdk.CollectionConverters._
+
 import com.intellij.openapi.project.Project
-import collection.JavaConverters._
-import com.intellij.openapi.vcs.changes.{LocalChangeList, ChangeListManager}
+import com.intellij.openapi.vcs.changes.{ChangeListManager, LocalChangeList}
 
 case class ProjectChangeListsManager(project: Project) {
 

@@ -1,11 +1,11 @@
 package ua.com.jozic.plugins
 
-import org.scalatest.FunSuite
-import scala.IllegalArgumentException
-import com.intellij.openapi.diagnostic.{DefaultLogger, Logger}
-import collection.mutable.ArrayBuffer
+import scala.collection.mutable.ArrayBuffer
 
-class LoggingExceptionsTest extends FunSuite {
+import com.intellij.openapi.diagnostic.{DefaultLogger, Logger}
+import org.scalatest.funsuite.AnyFunSuite
+
+class LoggingExceptionsTest extends AnyFunSuite {
 
 
   trait Fixture {
@@ -15,7 +15,7 @@ class LoggingExceptionsTest extends FunSuite {
       def loggerCategory: String = "test"
 
       override protected def getLogger: Logger = new DefaultLogger(loggerCategory) {
-        override def warn(message: String, t: Throwable) {
+        override def warn(message: String, t: Throwable): Unit = {
           messages += (message -> t)
         }
       }

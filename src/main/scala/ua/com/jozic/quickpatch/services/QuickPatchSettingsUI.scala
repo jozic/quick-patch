@@ -1,17 +1,17 @@
-package ua.com.jozic.quickpatch.components
+package ua.com.jozic.quickpatch.services
 
 import java.io.File
+import javax.swing.filechooser.FileFilter
+import javax.swing.{Icon, JPanel}
+
+import scala.swing._
+import scala.util.Try
 
 import com.intellij.openapi.options.{ConfigurationException, SearchableConfigurable}
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
-import javax.swing.filechooser.FileFilter
-import javax.swing.{Icon, JPanel}
 import ua.com.jozic.plugins.Notifications
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
-
-import scala.swing._
-import scala.util.{Success, Try}
 
 class QuickPatchSettingsUI(project: Project) extends SearchableConfigurable with Notifications {
 
@@ -70,7 +70,7 @@ class QuickPatchSettingsUI(project: Project) extends SearchableConfigurable with
 
   override def getHelpTopic = ""
 
-  def getIcon: Icon = IconLoader.getIcon("/ua/com/jozic/quickpatch/icons/quickpatch.png")
+  def getIcon: Icon = IconLoader.getIcon("/ua/com/jozic/quickpatch/icons/quickpatch.png", getClass)
 
   override def disposeUIResources(): Unit = ()
 
@@ -104,10 +104,8 @@ class QuickPatchSettingsUI(project: Project) extends SearchableConfigurable with
 
   override def createComponent: JPanel = panel.peer
 
-  def ignorePatternTry: Try[Option[String]] = ignorePatternField.text match {
-    case text if text.nonEmpty => Try(Some(text.r.regex))
-    case _ => Success(None)
-  }
+  def ignorePatternError: Option[Throwable] =
+    Try(ignorePatternField.text.r.regex).failed.toOption
 
   private def currentSettings = QuickPatchSettings(project)
 
@@ -140,7 +138,7 @@ class QuickPatchSettingsUI(project: Project) extends SearchableConfigurable with
     }
 
     def checkPatternIsCompilable(): Unit = {
-      ignorePatternTry.failed.foreach { e =>
+      ignorePatternError.foreach { e =>
         throw new ConfigurationException(patternIsNotCompilableMessage(e.getMessage), dialogTitle)
       }
     }

@@ -3,13 +3,13 @@ package ua.com.jozic.quickpatch.actions
 import com.intellij.openapi.actionSystem.AnActionEvent
 import ua.com.jozic.plugins._
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
-import ua.com.jozic.quickpatch.components.QuickPatcherComponent
+import ua.com.jozic.quickpatch.services.QuickPatcherService
 
 class SavePatchesAction extends BasePatchesAction {
 
   def doAction(event: AnActionEvent): Unit = {
     val currentProject = event.getProject
-    currentProject.projectComponent[QuickPatcherComponent].makePatches()
+    currentProject.get[QuickPatcherService].makePatches()
     doNotify(savedSuccessfully, currentProject)
   }
 
@@ -19,13 +19,12 @@ class SavePatchesAction extends BasePatchesAction {
     message("save.notification.content", "dir")
   )
 
-  override def update(event: AnActionEvent) {
+  override def update(event: AnActionEvent): Unit = {
     event.getPresentation.setEnabled(actionEnabled(event))
   }
 
-  def actionEnabled(event: AnActionEvent): Boolean = {
+  def actionEnabled(event: AnActionEvent): Boolean =
     Option(event.getProject).exists {
-      p => ProjectChangeListsManager(p).changeLists.exists(p.projectComponent[QuickPatcherComponent].needToSave)
+      p => ProjectChangeListsManager(p).changeLists.exists(p.get[QuickPatcherService].needToSave)
     }
-  }
 }

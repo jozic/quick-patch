@@ -4,7 +4,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.notification.{NotificationType, Notification, Notifications => JBNotifications}
 
 trait Notifications {
-  def doNotify(notification: Notification, project: Project) {
+  def doNotify(notification: Notification, project: Project): Unit = {
     JBNotifications.Bus.notify(notification, project)
   }
 

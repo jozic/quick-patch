@@ -7,38 +7,30 @@ lazy val quickPatch =
     .settings(
       name := "quick-patch",
       organization := "com.daodecode",
-      version := "0.1.1",
-      scalaVersion := "2.12.8",
+      version := "0.1.2",
+      scalaVersion := "2.13.6",
       scalacOptions := Seq(
         "-Xlint",
         "-unchecked",
         "-deprecation",
         "-Xfatal-warnings",
-        "-Ywarn-inaccessible",
         "-Ywarn-dead-code",
-        "-Ywarn-adapted-args",
-        "-Ywarn-nullary-unit",
         "-feature",
         "-language:postfixOps",
         "-language:implicitConversions",
         "-Ywarn-unused",
-        "-Ywarn-unused-import",
         "-encoding", "UTF-8"
       ),
       libraryDependencies ++=
         Seq(
-          "org.scala-lang.modules" %% "scala-swing" % "2.1.0",
-          "org.scalatest" %% "scalatest" % "3.0.7" % "test"
+          "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
+          "org.scalatest" %% "scalatest" % "3.2.9" % "test"
         ),
-      ideaPluginName in ThisBuild := "QuickPatch",
-      ideaBuild := "2018.1.1",
-      ideaPublishSettings := PublishSettings(pluginId = "", username = "", password = "", channel = None),
+      intellijPluginName := "QuickPatch",
+      intellijBuild := "2021.2.1",
       packageLibraryMappings ++= Seq(
         "org.scala-lang" % "scala-library" % ".*" -> Some("lib/scala-library.jar"),
         "org.scala-lang.modules" % "scala-swing" % ".*" -> Some("lib/scala-swing.jar")
       )
     ).enablePlugins(SbtIdeaPlugin)
-
-lazy val ideaRunner = createRunnerProject(quickPatch, "idea-runner")
-
 

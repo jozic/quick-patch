@@ -1,6 +1,6 @@
 package ua.com.jozic.plugins
 
-import org.jdom.xpath.XPath
+import org.jdom.xpath.XPathFactory
 import org.jdom.{Attribute, Element}
 
 trait PersistentState[S] extends LoggingExceptions[S] {
@@ -11,7 +11,13 @@ trait PersistentState[S] extends LoggingExceptions[S] {
     elem("option").setAttribute("name", name).setAttribute("value", value.toString)
 
   protected[plugins] def stringOption(state: Element, name: String): Option[String] =
-    Option(XPath.selectSingleNode(state, "./option[@name='" + name + "']/@value").asInstanceOf[Attribute]).map(_.getValue)
+    Option(
+      XPathFactory
+        .instance()
+        .compile("./option[@name='" + name + "']/@value")
+        .evaluateFirst(state)
+        .asInstanceOf[Attribute]
+    ).map(_.getValue)
 
   protected[plugins] def stringValue(state: Element, name: String): String = stringOption(state, name).getOrElse("")
 
@@ -21,11 +27,8 @@ trait PersistentState[S] extends LoggingExceptions[S] {
     case (e, (name, value)) => e.addContent(option(name, value))
   }
 
-  final def loadState(state: Element, warning: String = "Can't load settings ..."): Option[S] = {
-    logExceptionAsWarn[Exception](warning) {
-      doLoad(state)
-    }
-  }
+  final def loadState(state: Element, warning: String = "Can't load settings ..."): Option[S] =
+    logExceptionAsWarn[Exception](warning)(doLoad(state))
 
   def doLoad(state: Element): S
 }

@@ -26,18 +26,23 @@
         When the plugin is installed you get an additional action on IDEA's Changes panel. If you have at least one change list which satisfies your settings the action is enabled and you can click the icon or use associated shortcut to activate it. Voila, your patches are already in the specified folder.
         ]]>
     </description>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <vendor email="jozic@live.com"
             url="https://github.com/jozic/quick-patch">Eugene Platonov
     </vendor>
     <category>VCS Integration</category>
-    <idea-version since-build="181.4445.4"/>
+    <idea-version since-build="212.5080.55"/>
     <resource-bundle>ua.com.jozic.quickpatch.QuickPatchMessageBundle</resource-bundle>
     <depends>com.intellij.modules.vcs</depends>
 
     <change-notes>
         <![CDATA[
         <ul>
+            <li>0.1.2
+                <ul>
+                    <li>Support for JetBrains IDEs 2021.2+</li>
+                </ul>
+             </li>
             <li>0.1.1
                 <ul>
                     <li>Update plugin descriptor so that it's available for all JetBrains products</li>
@@ -76,36 +81,22 @@
         ]]>
     </change-notes>
 
-    <project-components>
-        <component>
-            <implementation-class>
-                ua.com.jozic.quickpatch.components.QuickPatcherComponent
-            </implementation-class>
-        </component>
-        <component>
-            <implementation-class>
-                ua.com.jozic.quickpatch.components.QuickPatchApplierComponent
-            </implementation-class>
-        </component>
-    </project-components>
-
     <actions>
         <action id="SavePatches" class="ua.com.jozic.quickpatch.actions.SavePatchesAction"
                 icon="/ua/com/jozic/quickpatch/icons/make.patch.png">
             <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl P"/>
         </action>
-        <!--<action id="RestorePatches" class="ua.com.jozic.quickpatch.actions.RestorePatchesAction"-->
-        <!--icon="/ua/com/jozic/quickpatch/icons/restore.patch.png">-->
-        <!--<add-to-group group-id="ChangesViewToolbar" anchor="last"/>-->
-        <!--</action>-->
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
+
+        <projectService serviceImplementation="ua.com.jozic.quickpatch.services.QuickPatcherService"/>
+        <projectService serviceImplementation="ua.com.jozic.quickpatch.services.QuickPatchSettings"/>
+
         <projectConfigurable groupId="tools"
                              displayName="Quick Patch"
                              id="QuickPatchSettingsComponent"
-                             instance="ua.com.jozic.quickpatch.components.QuickPatchSettingsUI" />
-        <projectService serviceImplementation="ua.com.jozic.quickpatch.components.QuickPatchSettings"/>
+                             instance="ua.com.jozic.quickpatch.services.QuickPatchSettingsUI"/>
     </extensions>
 </idea-plugin>

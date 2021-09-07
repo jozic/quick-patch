@@ -3,7 +3,7 @@ package ua.com.jozic.quickpatch.actions
 import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent}
 import ua.com.jozic.plugins._
 import ua.com.jozic.quickpatch.QuickPatchMessageBundle.message
-import ua.com.jozic.quickpatch.components.QuickPatchSettings
+import ua.com.jozic.quickpatch.services.QuickPatchSettings
 
 trait BasePatchesAction extends AnAction with Notifications {
 

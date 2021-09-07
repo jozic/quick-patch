@@ -1,12 +1,13 @@
-package ua.com.jozic.quickpatch.components
+package ua.com.jozic.quickpatch.services
 
 import java.io.File
+
+import scala.beans.BeanProperty
 
 import com.intellij.openapi.components._
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.XmlSerializerUtil
-
-import scala.beans.BeanProperty
+import ua.com.jozic.plugins._
 
 @State(
   name = "QuickPatchSettings",
@@ -33,6 +34,5 @@ class QuickPatchSettings extends PersistentStateComponent[QuickPatchSettings] {
 }
 
 object QuickPatchSettings {
-  def apply(project: Project): QuickPatchSettings =
-    ServiceManager.getService(project, classOf[QuickPatchSettings])
+  def apply(project: Project): QuickPatchSettings = project.get[QuickPatchSettings]
 }

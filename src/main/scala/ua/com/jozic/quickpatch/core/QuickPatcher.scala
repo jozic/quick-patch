@@ -3,13 +3,13 @@ package ua.com.jozic.quickpatch.core
 import java.io.FileWriter
 import java.net.URLEncoder
 
+import scala.util.control.Exception._
+
 import com.intellij.application.options.CodeStyle
 import com.intellij.openapi.diff.impl.patch.{IdeaTextPatchBuilder, UnifiedDiffWriter}
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vcs.changes.LocalChangeList
 import com.intellij.openapi.vcs.changes.patch.PatchWriter
-
-import scala.util.control.Exception._
 
 abstract class QuickPatcher(val project: Project) {
 
@@ -21,7 +21,7 @@ abstract class QuickPatcher(val project: Project) {
 
   def prefix = ""
 
-  def makePatch(list: LocalChangeList) {
+  def makePatch(list: LocalChangeList): Unit = {
 
     def patchFileName: String = {
       val normalizedLocation = if (location.endsWith("/")) location else location + "/"
@@ -30,7 +30,7 @@ abstract class QuickPatcher(val project: Project) {
 
     val writer = new FileWriter(patchFileName)
     ultimately(writer.close()) {
-      val base = PatchWriter.calculateBaseForWritingPatch(project, list.getChanges).getPath
+      val base = PatchWriter.calculateBaseDirForWritingPatch(project, list.getChanges)
       val patches = IdeaTextPatchBuilder.buildPatch(project,
         list.getChanges, base, false)
       UnifiedDiffWriter.write(project, patches, writer, lineSeparator, null)

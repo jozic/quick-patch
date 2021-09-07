@@ -1,18 +1,20 @@
-package ua.com.jozic.quickpatch.components
+package ua.com.jozic.quickpatch.services
 
-import com.intellij.openapi.components.ProjectComponent
+import com.intellij.openapi.components.Service
+import com.intellij.openapi.components.Service.Level
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vcs.changes.LocalChangeList
 import ua.com.jozic.plugins.ProjectChangeListsManager
 import ua.com.jozic.quickpatch.core.QuickPatcher
 
-class QuickPatcherComponent(val project: Project) extends ProjectComponent {
+@Service(Array(Level.PROJECT))
+final class QuickPatcherService(val project: Project) {
 
   private val changeListsManager = ProjectChangeListsManager(project)
 
-  def settings = QuickPatchSettings(project)
+  def settings: QuickPatchSettings = QuickPatchSettings(project)
 
-  val quickPatcher = new QuickPatcher(project) {
+  val quickPatcher: QuickPatcher = new QuickPatcher(project) {
 
     override def location: String = settings.location
 
@@ -25,8 +27,6 @@ class QuickPatcherComponent(val project: Project) extends ProjectComponent {
     val ignoreByPattern = settings.maybeIgnorePattern.exists(_.r.pattern.matcher(list.getName).matches)
     !(dontSaveDefault || dontSaveEmpty || ignoreByPattern)
   }
-
-  override def getComponentName = "QuickPatcherComponent"
 
   def makePatches(): Unit = {
     changeListsManager.changeLists.filter(needToSave).foreach(quickPatcher.makePatch)

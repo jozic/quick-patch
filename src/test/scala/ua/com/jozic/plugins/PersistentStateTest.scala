@@ -1,26 +1,27 @@
 package ua.com.jozic.plugins
 
-import org.scalatest.FunSuite
+import scala.xml.Utility.trim
+import scala.xml.{Elem, Node, XML}
+
 import org.jdom.Element
 import org.jdom.output.XMLOutputter
-import scala.xml.{Node, Elem, XML}
-import scala.xml.Utility.trim
+import org.scalatest.funsuite.AnyFunSuite
 
-class PersistentStateTest extends FunSuite {
+class PersistentStateTest extends AnyFunSuite {
 
   lazy val xmlOut: XMLOutputter = new XMLOutputter()
 
-  implicit def javaToScalaXML(jElem: org.jdom.Element): scala.xml.Elem = XML.loadString(xmlOut.outputString(jElem))
+  implicit def javaToScalaXML(jElem: org.jdom.Element): scala.xml.Elem =
+    XML.loadString(xmlOut.outputString(jElem))
 
-  def options: Map[String, Any] = Map(
+  val options: Map[String, Any] = Map(
     "stringOption" -> "string",
     "booleanOption" -> true
   )
 
   val ps = new PersistentState[Unit] {
 
-    def doLoad(state: Element) {}
-
+    def doLoad(state: Element): Unit = ()
 
     def loggerCategory: String = "logger"
   }

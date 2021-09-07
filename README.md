@@ -36,6 +36,8 @@ If you have at least one change list which satisfies your settings the action is
 
 ## Change log
 
+  * 0.1.2   
+            - Support for JetBrains IDEs 2021.2+  
   * 0.1.1   
             - Update plugin descriptor so that it's available for all JetBrains products  
   * 0.1.0   
